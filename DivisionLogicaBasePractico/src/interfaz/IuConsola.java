@@ -70,6 +70,9 @@ public class IuConsola {
         System.out.println("===============");
 
         Cliente unCliente = new Cliente();
+        boolean ok = false;
+        
+        
         unCliente.setNombre(Consola.leer("Nombre:"));
         unCliente.setCedula(Consola.leer("Cedula:"));
 
