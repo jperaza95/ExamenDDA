@@ -42,13 +42,15 @@ public class LogicaNumeros {
 
     
     
-    public boolean ingresar(int valor){
+    public boolean ingresar(int numero){
+        if (numero<0) return false;
+        if(numero==0) cantidad = 0;                    
         if (faltan()==0) return false; 
         cantidad--;    
-        Integer objetoNumero=new Integer(valor);        
-        todos.add(valor);
-        if (valor%2==0) pares.add(valor);
-        else impares.add(valor);
+        Integer objetoNumero=new Integer(numero);        
+        todos.add(numero);
+        if (numero%2==0) pares.add(numero);
+        else impares.add(numero);
         return true;
 
     }
