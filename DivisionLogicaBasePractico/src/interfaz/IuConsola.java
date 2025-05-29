@@ -1,13 +1,12 @@
 package interfaz;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import logica.ControlClientes;
 
 import logica.Cliente;
 import logica.ControlStock;
 import logica.Factura;
-
+import logica.PracticoException;
 import logica.Producto;
 import logica.Proveedor;
 
@@ -16,7 +15,7 @@ import utilidades.Consola;
 public class IuConsola {
 
     ControlClientes controlClientes = ControlClientes.getInstancia();
-
+    ControlStock controlStock = ControlStock.getInstancia();
 
     /**
      * Ejecuta la consola
@@ -40,7 +39,8 @@ public class IuConsola {
 
         ArrayList<String> opciones = new ArrayList();
         opciones.add("Alta de Cliente"); //opcion 0
-        opciones.add("Salir del menú"); //opcion 1
+        opciones.add("Alta de Producto"); //opcion 1
+        opciones.add("Salir del menú"); //opcion 2
 
         return Consola.menu(opciones);
     }
@@ -57,6 +57,9 @@ public class IuConsola {
                 this.nuevoCliente();
                 break;
             case 1:
+                this.nuevoProducto();
+                break;
+            case 2:
                 salir = true;
                 break;
 
@@ -73,11 +76,12 @@ public class IuConsola {
         boolean ok = false;
         do {
             ok = unCliente.setCedula(Consola.leer("Cedula:"));
-            if(!ok) System.out.println("Cedula incorrecta");
+            if (!ok) {
+                System.out.println("Cedula incorrecta");
+            }
         } while (!ok);
-        
+
         unCliente.setNombre(Consola.leer("Nombre:"));
-        
 
         if (controlClientes.agregar(unCliente)) {
             mostrarClientes();
@@ -97,5 +101,47 @@ public class IuConsola {
         }
     }
 
+    private void nuevoProducto() {
+        System.out.println("ALTA DE PRODUCTO");
+        System.out.println("===============");
+
+        ArrayList<Proveedor> proveedores = controlStock.getProveedores();
+
+        boolean ok = false;
+        do {
+
+            Producto unProducto = new Producto();
+
+            try {
+                String nombre = Consola.leer("Nombre de Producto:\n");
+                unProducto.setNombre(nombre);
+
+                try {
+                    int unidades = Consola.leerInt("Ingresa las cantidades\n");
+
+                    int opcion = Consola.menu(proveedores);
+                    Proveedor prov = proveedores.get(opcion);
+                    System.out.println("proveedor elegido: " + prov.getNombre());
+                    float precio = (float) Consola.leerInt("Ingresa el precio: \n");
+
+                    //Producto unProducto = new Producto(nombre, precio, unidades, prov);
+                } catch (Exception e) {
+                }
+
+            } catch (PracticoException e) {
+                Consola.println(e.getMessage());
+                ok = false;
+            }
+
+        } while (!ok);
+
+//        unCliente.setNombre(Consola.leer("Nombre:"));
+//
+//        if (controlClientes.agregar(unCliente)) {
+//            mostrarClientes();
+//        } else {
+//            System.out.println("EL CLIENTE NO FUE INGRESADO");
+//        }
+    }
 
 }

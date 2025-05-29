@@ -12,7 +12,7 @@ package logica;
 public class Producto {
 
     private String nombre;
-    private int precio;
+    private float precio;
     private int unidades;
     private Proveedor proveedor;
     private int codigo;
@@ -20,12 +20,12 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(String nombre, int precio, int stock, Proveedor proveedor) {
+    public Producto(String nombre, float precio, int stock, Proveedor proveedor) throws PracticoException {
         this.nombre = nombre;
         this.precio = precio;
         this.unidades = stock;
         this.proveedor = proveedor;
-
+        validarNombre(nombre);
         //proveedor.agregar(this);
     }
 
@@ -53,7 +53,7 @@ public class Producto {
         return precio;
     }
 
-    public boolean setPrecio(int precio) {
+    public boolean setPrecio(float precio) {
         if (validarPrecio(precio)) {
             this.precio = precio;
             return true;
@@ -65,12 +65,14 @@ public class Producto {
         return nombre;
     }
 
-    public boolean setNombre(String nombre) {
-        if (nombre.trim().length() > 0) {
-            this.nombre = nombre;
-            return true;
-        }
-        return false;
+    public void setNombre(String nombre) throws PracticoException {
+
+            
+            if (nombre.trim().length() <= 0) throw new PracticoException("El nombre no puede estar vacío.");
+            
+            this.nombre = nombre;                
+
+
     }
 
     @Override
@@ -86,7 +88,7 @@ public class Producto {
         return unidades > 0;
     }
 
-    private boolean validarPrecio(int precio) {
+    private boolean validarPrecio(float precio) {
         return precio >= 0;
 
     }
@@ -95,14 +97,15 @@ public class Producto {
         return codigo;
     }
 
-    boolean validar() {
-        return validarNombre(nombre) && validarProveedor(proveedor) && validarPrecio(precio) && validarUnidades(unidades);
-    }
+//    boolean validar() {
+//        return validarNombre(nombre) && validarProveedor(proveedor) && validarPrecio(precio) && validarUnidades(unidades);
+//    }
 
-    private boolean validarNombre(String nombre) {
-        if (nombre==null) return false;
-        nombre = nombre.trim();
-        return !nombre.equals("");
+    private void validarNombre(String nombre) throws PracticoException {
+
+        
+        if (nombre==null || nombre.trim().equals("")) throw new PracticoException("El nombre no puede ser vacío");
+
         
     }
 

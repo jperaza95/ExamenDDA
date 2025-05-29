@@ -56,52 +56,8 @@ public class ControlStock {
         return true;
     }
 
-//    public Proveedor getProveedorByNombre(String nombre) {
-//        Proveedor temp = null;
-//        int i = 0;
-//        boolean encontre = false;
-//        while (i < proveedores.size() && !encontre) {
-//            if (proveedores.get(i).getNombre() == nombre) {
-//                temp = proveedores.get(i);
-//                encontre = true;
-//            }
-//        }
-//        return temp;
-//    }
 
-    public ArrayList<Integer> codigosProducto(){
-        ArrayList<Integer> listaaux = new ArrayList();
-        for (Producto p : productos) {
-            listaaux.add(p.getCodigo());
-        }
-        return listaaux;
-    }
-    
-    public boolean altaProducto(Producto unProducto) {
-        if (unProducto.validar()) {
-            unProducto.setCodigo(generarCodigoProducto());
-            productos.add(unProducto);
-            unProducto.getProveedor().agregar(unProducto);
-            return true;
-        }
-        return false;
-    }
 
-    private int generarCodigoProducto() {
-        proximoCodigoproducto++;
-        return proximoCodigoproducto;
-    }
-
-    public Producto getProductoPorCodigo(int codigo) {
-        Producto aux = null;
-        int pos = 0;
-        while(aux == null && pos<this.getProductos().size()){
-            if (this.getProductos().get(pos).getCodigo() == codigo) {
-                aux = this.getProductos().get(pos);
-            }
-        }
-        return aux;
-    }
     
    
 }
