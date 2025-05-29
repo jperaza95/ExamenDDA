@@ -71,10 +71,13 @@ public class IuConsola {
 
         Cliente unCliente = new Cliente();
         boolean ok = false;
-        
+        do {
+            ok = unCliente.setCedula(Consola.leer("Cedula:"));
+            if(!ok) System.out.println("Cedula incorrecta");
+        } while (!ok);
         
         unCliente.setNombre(Consola.leer("Nombre:"));
-        unCliente.setCedula(Consola.leer("Cedula:"));
+        
 
         if (controlClientes.agregar(unCliente)) {
             mostrarClientes();
