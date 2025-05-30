@@ -118,14 +118,23 @@ public class IuConsola {
 
                 try {
                     int unidades = Consola.leerInt("Ingresa las cantidades\n");
-
+                    unProducto.setUnidades(unidades);
+                    
                     int opcion = Consola.menu(proveedores);
                     Proveedor prov = proveedores.get(opcion);
                     System.out.println("proveedor elegido: " + prov.getNombre());
+                    unProducto.setProveedor(prov);
+                    prov.agregar(unProducto);
                     float precio = (float) Consola.leerInt("Ingresa el precio: \n");
+                    unProducto.setPrecio(precio);
+                    controlStock.agregar(unProducto);
+                    
+                    System.out.println("Se ha agregado correctamente.");
 
-                    //Producto unProducto = new Producto(nombre, precio, unidades, prov);
-                } catch (Exception e) {
+                } catch (PracticoException e) {
+                    Consola.println(e.getMessage());
+
+                    return;
                 }
 
             } catch (PracticoException e) {

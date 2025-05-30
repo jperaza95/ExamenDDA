@@ -20,12 +20,12 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(String nombre, float precio, int stock, Proveedor proveedor) throws PracticoException {
+    public Producto(String nombre, float precio, int stock, Proveedor proveedor) {
         this.nombre = nombre;
         this.precio = precio;
         this.unidades = stock;
         this.proveedor = proveedor;
-        validarNombre(nombre);
+
         //proveedor.agregar(this);
     }
 
@@ -33,12 +33,12 @@ public class Producto {
         return unidades;
     }
 
-    public boolean setUnidades(int unidades) {
-        if (validarUnidades(unidades)) {
-            this.unidades = unidades;
-            return true;
-        }
-        return false;
+    public void setUnidades(int unidades) throws PracticoException {
+        
+            validarUnidades(unidades);
+            this.unidades=unidades;
+
+          
     }
 
     public Proveedor getProveedor() {
@@ -53,12 +53,10 @@ public class Producto {
         return precio;
     }
 
-    public boolean setPrecio(float precio) {
-        if (validarPrecio(precio)) {
-            this.precio = precio;
-            return true;
-        }
-        return false;
+    public void setPrecio(float precio) throws PracticoException {
+        validarPrecio(precio);
+        this.precio = precio;
+
     }
 
     public String getNombre() {
@@ -84,12 +82,14 @@ public class Producto {
         codigo = cod;
     }
 
-    private boolean validarUnidades(int unidades) {
-        return unidades > 0;
+    private void validarUnidades(int unidades) throws PracticoException {
+        if(unidades <= 0) throw new PracticoException("Cantidad inválida");
     }
 
-    private boolean validarPrecio(float precio) {
-        return precio >= 0;
+    private void validarPrecio(float precio) throws PracticoException {
+     
+        if(precio<0) throw new PracticoException("Precio no puede ser negativo");
+
 
     }
 

@@ -12,7 +12,7 @@ package logica;
 public class DatosPrueba {
     
     
-    public static void cargar(){
+    public static void cargar() throws PracticoException{
        
         ControlStock cs = ControlStock.getInstancia();
         
