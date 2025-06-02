@@ -40,7 +40,8 @@ public class IuConsola {
         ArrayList<String> opciones = new ArrayList();
         opciones.add("Alta de Cliente"); //opcion 0
         opciones.add("Alta de Producto"); //opcion 1
-        opciones.add("Salir del menú"); //opcion 2
+        opciones.add("Alta de Factura"); //opcion 2
+        opciones.add("Salir del menú"); //opcion 3
 
         return Consola.menu(opciones);
     }
@@ -60,6 +61,9 @@ public class IuConsola {
                 this.nuevoProducto();
                 break;
             case 2:
+                this.nuevaFactura();
+                break;
+            case 3:
                 salir = true;
                 break;
 
@@ -107,50 +111,49 @@ public class IuConsola {
 
         ArrayList<Proveedor> proveedores = controlStock.getProveedores();
 
-        boolean ok = false;
-        do {
+        Producto unProducto = new Producto();
 
-            Producto unProducto = new Producto();
+        while (!unProducto.setNombre(Consola.leer("Nombre de producto: \n"))) {
 
-            try {
-                String nombre = Consola.leer("Nombre de Producto:\n");
-                unProducto.setNombre(nombre);
+            System.out.println("Nombre inválido");
+        }
 
-                try {
-                    int unidades = Consola.leerInt("Ingresa las cantidades\n");
-                    unProducto.setUnidades(unidades);
-                    
-                    int opcion = Consola.menu(proveedores);
-                    Proveedor prov = proveedores.get(opcion);
-                    System.out.println("proveedor elegido: " + prov.getNombre());
-                    unProducto.setProveedor(prov);
-                    prov.agregar(unProducto);
-                    float precio = (float) Consola.leerInt("Ingresa el precio: \n");
-                    unProducto.setPrecio(precio);
-                    controlStock.agregar(unProducto);
-                    
-                    System.out.println("Se ha agregado correctamente.");
+        while (!unProducto.setUnidades(Consola.leerInt("Cantidades: \n"))) {
 
-                } catch (PracticoException e) {
-                    Consola.println(e.getMessage());
+            System.out.println("Cantidad inválida");
+        }
 
-                    return;
-                }
+        int opcion = Consola.menu(proveedores);
+        Proveedor prov = proveedores.get(opcion);
+        
+        System.out.println("proveedor elegido: " + prov.getNombre());
+        unProducto.setProveedor(prov);
+        prov.agregar(unProducto);
 
-            } catch (PracticoException e) {
-                Consola.println(e.getMessage());
-                ok = false;
-            }
+        while (!unProducto.setPrecio((float) Consola.leerInt("Ingresa el precio: \n"))) {
+            System.out.println("Precio inválido");
+        }
+        controlStock.agregar(unProducto);
 
-        } while (!ok);
+        System.out.println("Se ha agregado correctamente.");
 
-//        unCliente.setNombre(Consola.leer("Nombre:"));
-//
-//        if (controlClientes.agregar(unCliente)) {
-//            mostrarClientes();
-//        } else {
-//            System.out.println("EL CLIENTE NO FUE INGRESADO");
-//        }
+
+    }
+
+    private void nuevaFactura() {
+        System.out.println("ALTA DE FACTURA");
+        System.out.println("===============");
+        
+        
+        Factura factura = new Factura();
+        
+        while(!factura.setCliente(controlClientes.obtenerClientePorCedula(Consola.leer("Ingrese su Cedula sin puntos ni guiones: ")))){
+            System.out.println("Cedula invalida");
+        }
+            
+        
+        
+        
     }
 
 }

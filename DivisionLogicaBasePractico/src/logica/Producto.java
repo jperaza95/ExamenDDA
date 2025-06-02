@@ -33,10 +33,10 @@ public class Producto {
         return unidades;
     }
 
-    public void setUnidades(int unidades) throws PracticoException {
+    public boolean setUnidades(int unidades) {
         
-            validarUnidades(unidades);
-            this.unidades=unidades;
+            if(!validarUnidades(unidades))return false;
+            this.unidades=unidades;return true;
 
           
     }
@@ -53,9 +53,9 @@ public class Producto {
         return precio;
     }
 
-    public void setPrecio(float precio) throws PracticoException {
-        validarPrecio(precio);
-        this.precio = precio;
+    public boolean setPrecio(float precio) {
+        if(!validarPrecio(precio)) return false;
+        this.precio = precio; return true;
 
     }
 
@@ -63,12 +63,12 @@ public class Producto {
         return nombre;
     }
 
-    public void setNombre(String nombre) throws PracticoException {
+    public boolean setNombre(String nombre) {
 
             
-            if (nombre.trim().length() <= 0) throw new PracticoException("El nombre no puede estar vacío.");
+            if (nombre.trim().length() <= 0) return false;
             
-            this.nombre = nombre;                
+            this.nombre = nombre;return true;                
 
 
     }
@@ -82,13 +82,13 @@ public class Producto {
         codigo = cod;
     }
 
-    private void validarUnidades(int unidades) throws PracticoException {
-        if(unidades <= 0) throw new PracticoException("Cantidad inválida");
+    private boolean validarUnidades(int unidades){
+        return(unidades > 0); 
     }
 
-    private void validarPrecio(float precio) throws PracticoException {
+    private boolean validarPrecio(float precio) {
      
-        if(precio<0) throw new PracticoException("Precio no puede ser negativo");
+        return precio>=0;
 
 
     }

@@ -20,12 +20,17 @@ public class Factura {
         this.cliente = cliente;
     }
     
+    public Factura() {
+
+    }
+    
     public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public boolean setCliente(Cliente cliente) {
+        if(cliente==null) return false;
+        this.cliente = cliente;return true;
     }
 
     public ArrayList<LineaFactura> getLineas() {
