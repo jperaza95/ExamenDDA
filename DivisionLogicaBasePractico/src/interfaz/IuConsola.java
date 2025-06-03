@@ -125,7 +125,7 @@ public class IuConsola {
 
         int opcion = Consola.menu(proveedores);
         Proveedor prov = proveedores.get(opcion);
-        
+
         System.out.println("proveedor elegido: " + prov.getNombre());
         unProducto.setProveedor(prov);
         prov.agregar(unProducto);
@@ -137,23 +137,42 @@ public class IuConsola {
 
         System.out.println("Se ha agregado correctamente.");
 
-
     }
 
     private void nuevaFactura() {
         System.out.println("ALTA DE FACTURA");
         System.out.println("===============");
-        
-        
+
         Factura factura = new Factura();
-        
-        while(!factura.setCliente(controlClientes.obtenerClientePorCedula(Consola.leer("Ingrese su Cedula sin puntos ni guiones: ")))){
-            System.out.println("Cedula invalida");
+
+        Cliente clienteBuscado = controlClientes.obtenerClientePorCedula(Consola.leer("Ingrese su Cedula sin puntos ni guiones: "));
+        if (factura.setCliente(clienteBuscado)) {
+            
+            elegirProductos();
+            
+            
+        } else {
+
+            System.out.println("Cédula incorrecta.");
         }
+
             
         
         
         
+    }
+
+    private void elegirProductos() {
+        System.out.println("SELECCIONE LOS PRODUCTOS: ");
+        System.out.println("===============");
+
+        seleccionarProducto();
+        
+        System.out.println(controlStock.getProductos());
+    }
+
+    private void seleccionarProducto() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

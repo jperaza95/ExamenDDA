@@ -80,18 +80,14 @@ public class ControlClientes {
 
     public Cliente obtenerClientePorCedula(String unaCedula) {
         ArrayList<Cliente> lista = this.getClientes();
-        Cliente aux = null;
-        
-            int pos = 0;
-        while (pos < lista.size() && aux==null) {
-            Cliente c = lista.get(pos);
-            if (c.getCedula() == unaCedula) {
-                aux = c;
+
+        for (Cliente c : lista) {
+            if (c.getCedula().equals(unaCedula)) {
+                return c;
             }
-            pos++;
         }
-        
-        return aux;
+
+        return null;
 
     }
 }
