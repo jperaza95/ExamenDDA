@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import logica.ControlClientes;
 
 import logica.Cliente;
+import logica.ControlFacturas;
 import logica.ControlStock;
 import logica.Factura;
 import logica.PracticoException;
@@ -16,6 +17,7 @@ public class IuConsola {
 
     ControlClientes controlClientes = ControlClientes.getInstancia();
     ControlStock controlStock = ControlStock.getInstancia();
+    ControlFacturas controlFacturas = ControlFacturas.getInstancia();
 
     /**
      * Ejecuta la consola
@@ -148,8 +150,8 @@ public class IuConsola {
         Cliente clienteBuscado = controlClientes.obtenerClientePorCedula(Consola.leer("Ingrese su Cedula sin puntos ni guiones: "));
         if (factura.setCliente(clienteBuscado)) {
             
-            elegirProductos();
-            
+            elegirProductos(factura);
+
             
         } else {
 
@@ -162,17 +164,60 @@ public class IuConsola {
         
     }
 
-    private void elegirProductos() {
-        System.out.println("SELECCIONE LOS PRODUCTOS: ");
+    private void elegirProductos(Factura f) {
+        System.out.println("SELECCIÓN DE PRODUCTOS: ");
         System.out.println("===============");
 
-        seleccionarProducto();
-        
-        System.out.println(controlStock.getProductos());
+        boolean salir;
+        do {            
+            System.out.println("CÓDIGO DE PRODUCTO:");
+            int opcionProducto = Consola.menu(controlStock.getProductos());
+            int cant = Consola.leerInt("CANTIDAD: ");
+            
+            Producto prod; 
+            do {
+                
+                prod = controlStock.getProductos().get(cant);
+                
+                
+            } while (true);
+            
+            
+            
+            f.agregar(cant, prod); //agrega o actualiza linea
+            
+
+            
+            salir = preguntarSalir();
+            
+   
+        } while (!salir);
+
     }
 
     private void seleccionarProducto() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+    }
+
+    private boolean preguntarSalir() {
+        
+        String opcion;
+        do{ 
+            opcion =  Consola.leer("¿Desea seguir ingresando productos? S/N");
+            
+            switch (opcion.toUpperCase()) {
+                
+                case "N":
+                    return true;
+                    
+                case "S":
+                    return false;
+                    
+                default:
+                    System.out.println("Ingrese una opción válida.");
+            }
+        }while(true);
+
     }
 
 }

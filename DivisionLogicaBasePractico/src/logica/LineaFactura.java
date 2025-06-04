@@ -17,6 +17,7 @@ public class LineaFactura {
     public LineaFactura(Producto producto, int cantidad) {
         this.producto = producto;
         this.cantidad = cantidad;
+        
     }
 
     public Producto getProducto() {
@@ -41,7 +42,11 @@ public class LineaFactura {
 
     @Override
     public String toString() {
-        return "LineaFactura{" + "producto=" + producto + ", cantidad=" + cantidad + '}';
+        return "LineaFactura{producto=" +  producto + ", cantidad=" + cantidad + "}\n";
+    }
+
+    public void actualizarCantidad(LineaFactura l, int c) {
+        this.cantidad = cantidad+c;
     }
     
     

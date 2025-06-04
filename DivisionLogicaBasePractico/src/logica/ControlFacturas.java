@@ -37,16 +37,7 @@ public class ControlFacturas {
         facturas.add(unaFactura);
     }
     
-    public boolean clienteComproProducto(Cliente c, Producto p){
-        boolean ret = false;
-        for(Factura f: facturas){
-            if (f.getCliente().equals(c)&&f.tieneProducto(p)){
-                ret = true;
-            }
-        }
-      
-        return ret;
-    }
+    
     
 
     

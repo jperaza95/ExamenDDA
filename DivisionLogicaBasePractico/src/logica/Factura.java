@@ -38,25 +38,25 @@ public class Factura {
     }
 
     public void agregar(int cantidad, Producto p){
-        lineas.add(new LineaFactura(p, cantidad));
+
+        LineaFactura l = tieneProducto(p);
+        if(l == null) lineas.add(new LineaFactura(p, cantidad));
+        else l.actualizarCantidad(l,cantidad);         
     }
-    
-    public boolean tieneProducto(Producto unP){
-        boolean ret = false;
-        for(LineaFactura l: lineas){
-            if(l.tieneProducto(unP)){
-                ret = true;
-            }
+
+    private LineaFactura tieneProducto(Producto p){
+        for (LineaFactura linea : lineas) {
+            if(linea.tieneProducto(p)) return linea;
         }
-        return ret;       
+        return null;
     }
 
 
 
-    @Override
+    
+        @Override
     public String toString() {
         return "Factura{" + "cliente=" + cliente + ", lineas=" + lineas + '}';
     }
-    
     
 }

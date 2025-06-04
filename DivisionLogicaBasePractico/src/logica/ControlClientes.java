@@ -33,19 +33,6 @@ public class ControlClientes {
         return clientes;
     }
 
-    public ArrayList clientesNoCompraronProductoMenorPrecio() {
-        Producto menor = ControlStock.getInstancia().getProductoMenorPrecio();
-        ArrayList<Cliente> retorno = new ArrayList<Cliente>();
-
-        for (Cliente c : clientes) {
-            if (!ControlFacturas.getInstancia().clienteComproProducto(c, menor)) {
-                retorno.add(c);
-            }
-
-        }
-        return retorno;
-
-    }
 
     public boolean existeCliente(String unaCedula) {
         boolean existe = false;
