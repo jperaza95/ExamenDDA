@@ -13,7 +13,7 @@ public class Producto {
 
     private String nombre;
     private float precio;
-    private int unidades;
+    private int stock;
     private Proveedor proveedor;
     private int codigo;
 
@@ -23,20 +23,20 @@ public class Producto {
     public Producto(String nombre, float precio, int stock, Proveedor proveedor) {
         this.nombre = nombre;
         this.precio = precio;
-        this.unidades = stock;
+        this.stock = stock;
         this.proveedor = proveedor;
 
         //proveedor.agregar(this);
     }
 
-    public int getUnidades() {
-        return unidades;
+    public int getStock() {
+        return stock;
     }
 
-    public boolean setUnidades(int unidades) {
+    public boolean setStock(int unidades) {
         
             if(!validarUnidades(unidades))return false;
-            this.unidades=unidades;return true;
+            this.stock=unidades;return true;
 
           
     }
@@ -75,7 +75,7 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "Producto{" + "nombre=" + nombre + ", precio=" + precio + ", unidades=" + unidades + ", proveedor=" + proveedor + ", codigo=" + codigo + '}';
+        return "Producto{" + "nombre=" + nombre + ", precio=" + precio + ", unidades=" + stock + ", proveedor=" + proveedor + ", codigo=" + codigo + '}';
     }
 
     public void setCodigo(int cod) {
@@ -111,6 +111,10 @@ public class Producto {
 
     private boolean validarProveedor(Proveedor proveedor) {
         return proveedor != null;
+    }
+    
+    public void restarDelStock(int cantidad){
+        stock= stock - cantidad;
     }
 
 }

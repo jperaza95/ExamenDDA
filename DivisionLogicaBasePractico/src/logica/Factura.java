@@ -37,11 +37,17 @@ public class Factura {
         return lineas;
     }
 
-    public void agregar(int cantidad, Producto p){
-
-        LineaFactura l = tieneProducto(p);
-        if(l == null) lineas.add(new LineaFactura(p, cantidad));
-        else l.actualizarCantidad(l,cantidad);         
+    public boolean agregarLinea(int cantidad, Producto p){
+        if (cantidad<=p.getStock()) {
+            LineaFactura l = tieneProducto(p);
+            if(l == null) lineas.add(new LineaFactura(p, cantidad));
+            else l.actualizarCantidad(cantidad);
+            return true;
+        }
+        
+        return false;
+        
+       
     }
 
     private LineaFactura tieneProducto(Producto p){

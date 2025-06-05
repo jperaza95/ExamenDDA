@@ -120,7 +120,7 @@ public class IuConsola {
             System.out.println("Nombre inválido");
         }
 
-        while (!unProducto.setUnidades(Consola.leerInt("Cantidades: \n"))) {
+        while (!unProducto.setStock(Consola.leerInt("Cantidades: \n"))) {
 
             System.out.println("Cantidad inválida");
         }
@@ -170,24 +170,16 @@ public class IuConsola {
 
         boolean salir;
         do {            
+            Producto prod; 
             System.out.println("CÓDIGO DE PRODUCTO:");
             int opcionProducto = Consola.menu(controlStock.getProductos());
-            int cant = Consola.leerInt("CANTIDAD: ");
-            
-            Producto prod; 
-            do {
-                
-                prod = controlStock.getProductos().get(cant);
-                
-                
-            } while (true);
-            
-            
-            
-            f.agregar(cant, prod); //agrega o actualiza linea
-            
-
-            
+            prod = controlStock.getProductos().get(opcionProducto);
+            int cant;
+                     
+            while (!f.agregarLinea(Consola.leerInt("CANTIDAD: "), prod)) {
+                System.out.println("Hay "+prod.getStock()+" unidades del producto "+prod.getNombre()+".\n Ingrese una cantidad menor o presione 0 para seguir con otro articulo. ");
+            }
+                    
             salir = preguntarSalir();
             
    
