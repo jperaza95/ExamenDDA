@@ -151,7 +151,7 @@ public class IuConsola {
         if (factura.setCliente(clienteBuscado)) {
             
             elegirProductos(factura);
-
+            mostrarFactura(factura);
             
         } else {
 
@@ -210,6 +210,11 @@ public class IuConsola {
             }
         }while(true);
 
+    }
+    
+    private void mostrarFactura(Factura f){
+        System.out.println(f);
+    
     }
 
 }

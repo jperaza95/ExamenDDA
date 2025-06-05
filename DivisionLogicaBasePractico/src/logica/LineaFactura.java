@@ -17,8 +17,7 @@ public class LineaFactura {
     public LineaFactura(Producto producto, int cantidad) {
         this.producto = producto;
         this.cantidad = cantidad;
-        producto.restarDelStock(cantidad);
-        
+
     }
 
     public Producto getProducto() {
@@ -48,8 +47,11 @@ public class LineaFactura {
 
     public void actualizarCantidad(int c) {
         this.cantidad = cantidad+c;
-        this.producto.restarDelStock(c);
+        
     }
     
+    public float totalLinea(){
+        return 0;
+    }
     
 }

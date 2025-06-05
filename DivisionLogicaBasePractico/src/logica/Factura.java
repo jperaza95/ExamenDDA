@@ -38,10 +38,19 @@ public class Factura {
     }
 
     public boolean agregarLinea(int cantidad, Producto p){
-        if (cantidad<=p.getStock()) {
-            LineaFactura l = tieneProducto(p);
-            if(l == null) lineas.add(new LineaFactura(p, cantidad));
-            else l.actualizarCantidad(cantidad);
+        LineaFactura lineaExistente = tieneProducto(p);
+        int cantidadTotal;
+        
+        if (lineaExistente == null) {
+            cantidadTotal=cantidad;
+        }else{
+            cantidadTotal = lineaExistente.getCantidad()+cantidad;
+        }
+        
+        
+        if (cantidadTotal<=p.getStock()) {
+            if(lineaExistente == null) lineas.add(new LineaFactura(p, cantidad));
+            else lineaExistente.actualizarCantidad(cantidad);
             return true;
         }
         
@@ -58,11 +67,20 @@ public class Factura {
     }
 
 
+    public float totalFactura(){
+        float suma = 0;
+        for (LineaFactura linea : lineas) {
+            suma+=linea.totalLinea();
+        }  
+        return suma;
+    }
 
     
-        @Override
+    @Override
     public String toString() {
         return "Factura{" + "cliente=" + cliente + ", lineas=" + lineas + '}';
     }
+    
+
     
 }
