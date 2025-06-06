@@ -30,19 +30,7 @@ public class ControlStock {
         return proveedores;
     }
 
-    public Producto getProductoMenorPrecio() {
-        Producto menor = productos.get(0);
-        Producto p;
-        for (int x = 1; x < productos.size(); x++) {
-            p = productos.get(x);
-            if (p.getPrecio() < menor.getPrecio()) {
-                menor = p;
-            }
-        }
 
-        return menor;
-
-    }
 
     public void agregar(Proveedor unProveedor) {
         proveedores.add(unProveedor);
@@ -57,7 +45,18 @@ public class ControlStock {
     }
 
 
-
+    public Producto getProductoMasBarato(){
+        
+        float precioBarato = 0;
+        Producto masBarato=null;
+        
+        for (Producto producto : productos) {
+            if (producto.getPrecio()<precioBarato) masBarato =  producto;
+    
+        }
+        
+        return masBarato;
+    }
     
    
 }

@@ -7,6 +7,7 @@ import logica.Cliente;
 import logica.ControlFacturas;
 import logica.ControlStock;
 import logica.Factura;
+import logica.LineaFactura;
 import logica.PracticoException;
 import logica.Producto;
 import logica.Proveedor;
@@ -213,7 +214,38 @@ public class IuConsola {
     }
     
     private void mostrarFactura(Factura f){
-        System.out.println(f);
+        Consola.println("CodProducto   ---    Producto   ---    Cantidad   ---    Subtotal Linea");
+
+        ArrayList<LineaFactura> listaLineas = f.getLineas(); 
+        
+        for (LineaFactura linea : listaLineas) {
+            Producto p = linea.getProducto();
+             Consola.println(p.getCodigo()+"   ---    "+p.getNombre()+"   ---    "+linea.getCantidad()+"   ---    "+ linea.totalLinea());
+        }
+        
+        Consola.println("TOTAL:  $"+f.totalFactura());
+        
+        
+        String opcion;
+        
+        
+        do{
+            opcion=Consola.leer("¿Confirma el ingreso de la factura? S/N");
+            
+            switch (opcion.toUpperCase()) {
+                
+                case "S":
+                    controlFacturas.agregar(f);
+                    
+                case "N":
+                    return;
+                    
+                default:
+                    System.out.println("Ingrese una opción válida.");
+            }
+            
+        }while(true);
+        
     
     }
 

@@ -6,6 +6,8 @@
 package logica;
 
 import java.util.ArrayList;
+import java.time.LocalDate;
+import javax.print.attribute.standard.DateTimeAtCompleted;
 
 /**
  *
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 public class Factura {
     
     private Cliente cliente;
+    private LocalDate fechaCompra;
     private ArrayList <LineaFactura> lineas = new ArrayList();
 
     public Factura(Cliente cliente) {
@@ -36,6 +39,12 @@ public class Factura {
     public ArrayList<LineaFactura> getLineas() {
         return lineas;
     }
+
+    public void setFechaCompraActual() {
+        this.fechaCompra = LocalDate.now();
+    }
+    
+    
 
     public boolean agregarLinea(int cantidad, Producto p){
         LineaFactura lineaExistente = tieneProducto(p);

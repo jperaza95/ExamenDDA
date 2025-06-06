@@ -34,6 +34,7 @@ public class ControlFacturas {
     }
     
     public void agregar(Factura unaFactura){
+        unaFactura.setFechaCompraActual();
         facturas.add(unaFactura);
     }
     

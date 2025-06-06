@@ -51,7 +51,7 @@ public class LineaFactura {
     }
     
     public float totalLinea(){
-        return 0;
+        return producto.getPrecio()*cantidad;
     }
     
 }
