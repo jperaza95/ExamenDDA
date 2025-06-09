@@ -67,15 +67,12 @@ public class ControlClientes {
 
     public Cliente obtenerClientePorCedula(String unaCedula) {
         ArrayList<Cliente> lista = this.getClientes();
-
         for (Cliente c : lista) {
             if (c.getCedula().equals(unaCedula)) {
                 return c;
             }
         }
-
         return null;
-
     }
     
     public ArrayList<Cliente> compraronProducto(Producto p){

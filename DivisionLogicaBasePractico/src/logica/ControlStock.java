@@ -37,13 +37,17 @@ public class ControlStock {
     }
 
     public boolean agregar(Producto unProducto) {
-        unProducto.setCodigo(proximoCodigoproducto);
-        productos.add(unProducto);
-        unProducto.getProveedor().agregar(unProducto);
-        proximoCodigoproducto++;
-        return true;
+        if (unProducto.validar()) {            
+            unProducto.setCodigo(generarCodigoProducto());
+            productos.add(unProducto);
+            unProducto.getProveedor().agregar(unProducto);
+            return true;
+        }
+        return false;
     }
 
+    
+    
 
     public Producto getProductoMasBarato(){
         if(productos.isEmpty()) return null;
@@ -57,6 +61,16 @@ public class ControlStock {
         }
         
         return masBarato;
+    }
+
+    private int generarCodigoProducto() {
+       proximoCodigoproducto++;
+       return proximoCodigoproducto;
+
+    }
+
+    Producto buscar(int codProd) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
    

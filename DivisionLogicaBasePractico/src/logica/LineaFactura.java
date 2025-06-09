@@ -54,4 +54,8 @@ public class LineaFactura {
         return producto.getPrecio()*cantidad;
     }
     
+    protected void bajarStock(){
+        producto.restarDelStock(cantidad);
+    }
+    
 }

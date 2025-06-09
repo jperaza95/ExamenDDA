@@ -116,7 +116,6 @@ public class IuConsola {
         System.out.println("ALTA DE PRODUCTO");
         System.out.println("===============");
 
-        ArrayList<Proveedor> proveedores = controlStock.getProveedores();
 
         Producto unProducto = new Producto();
 
@@ -129,6 +128,8 @@ public class IuConsola {
 
             System.out.println("Cantidad inválida");
         }
+        
+        ArrayList<Proveedor> proveedores = controlStock.getProveedores();
 
         int opcion = Consola.menu(proveedores);
         Proveedor prov = proveedores.get(opcion);
@@ -140,9 +141,15 @@ public class IuConsola {
         while (!unProducto.setPrecio((float) Consola.leerInt("Ingresa el precio: \n"))) {
             System.out.println("Precio inválido");
         }
-        controlStock.agregar(unProducto);
+        
+        if (controlStock.agregar(unProducto)) {
+            System.out.println("Se dio de alta correctamente con código: "+unProducto.getCodigo());
+            
+        }else{
+            System.out.println("ERROR!");
+        }
+       
 
-        System.out.println("Se ha agregado correctamente.");
 
     }
 
@@ -150,22 +157,20 @@ public class IuConsola {
         System.out.println("ALTA DE FACTURA");
         System.out.println("===============");
 
-        Factura factura = new Factura();
+        Factura nueva = controlFacturas.nuevaFactura(Consola.leer("Ingrese su Cedula sin puntos ni guiones: "));
 
-        Cliente clienteBuscado = controlClientes.obtenerClientePorCedula(Consola.leer("Ingrese su Cedula sin puntos ni guiones: "));
-        if (factura.setCliente(clienteBuscado)) {
-            
-            elegirProductos(factura);
-            mostrarFactura(factura);
-            
-        } else {
-
+        //Cliente clienteBuscado = controlClientes.obtenerClientePorCedula(Consola.leer("Ingrese su Cedula sin puntos ni guiones: "));
+        
+        if (nueva==null) {            
             System.out.println("Cédula incorrecta.");
-        }
-
+            return;
             
+        } 
         
+        System.out.println("Cliente: "+nueva.getCliente().getNombre());
         
+        elegirProductos(nueva);
+        mostrarFactura(nueva);       
         
     }
 

@@ -18,6 +18,7 @@ public class Factura {
     private Cliente cliente;
     private LocalDate fechaCompra;
     private ArrayList <LineaFactura> lineas = new ArrayList();
+    private int numero;
 
     public Factura(Cliente cliente) {
         this.cliente = cliente;
@@ -35,6 +36,16 @@ public class Factura {
         if(cliente==null) return false;
         this.cliente = cliente;return true;
     }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+    
+    
 
     public ArrayList<LineaFactura> getLineas() {
         return lineas;
@@ -71,6 +82,13 @@ public class Factura {
         return false;
         
        
+    }
+    
+    public boolean agregarPorCodigo(int cantidad, int codProd){
+        Producto p = ControlStock.getInstancia().buscar(codProd);
+        if (p==null) return false; 
+        return agregarLinea(cantidad,p);    
+        
     }
 
     public LineaFactura tieneProducto(Producto p){

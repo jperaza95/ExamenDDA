@@ -97,14 +97,15 @@ public class Producto {
         return codigo;
     }
 
-//    boolean validar() {
-//        return validarNombre(nombre) && validarProveedor(proveedor) && validarPrecio(precio) && validarUnidades(unidades);
-//    }
+   public boolean validar() {
+        return validarNombre(nombre) && validarProveedor(proveedor) && validarPrecio(precio) && validarUnidades(stock);
+    }
 
-    private void validarNombre(String nombre) throws PracticoException {
-
+    private boolean validarNombre(String nombre)  {
         
-        if (nombre==null || nombre.trim().equals("")) throw new PracticoException("El nombre no puede ser vacío");
+        if (nombre==null) return false;
+        nombre = nombre.trim();
+        return !nombre.equals("");
 
         
     }
