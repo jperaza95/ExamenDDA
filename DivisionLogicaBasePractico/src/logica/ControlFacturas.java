@@ -38,8 +38,12 @@ public class ControlFacturas {
         facturas.add(unaFactura);
     }
     
-    
-    
+    public boolean clienteComproProducto(Cliente c, Producto p){
+        for (Factura factura : facturas) {
+            if(factura.getCliente().equals(c)) return true;
+        }
+        return false;
+    } 
 
     
 }

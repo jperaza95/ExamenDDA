@@ -47,8 +47,8 @@ public class ControlStock {
 
     public Producto getProductoMasBarato(){
         
-        float precioBarato = 0;
-        Producto masBarato=null;
+        Producto masBarato=productos.get(0);
+        float precioBarato = masBarato.getPrecio();
         
         for (Producto producto : productos) {
             if (producto.getPrecio()<precioBarato) masBarato =  producto;

@@ -44,7 +44,8 @@ public class IuConsola {
         opciones.add("Alta de Cliente"); //opcion 0
         opciones.add("Alta de Producto"); //opcion 1
         opciones.add("Alta de Factura"); //opcion 2
-        opciones.add("Salir del menú"); //opcion 3
+        opciones.add("Clientes producto mas barato");//opcion 3
+        opciones.add("Salir del menú"); //opcion 4
 
         return Consola.menu(opciones);
     }
@@ -67,6 +68,9 @@ public class IuConsola {
                 this.nuevaFactura();
                 break;
             case 3:
+                this.clientesProductoMasBarato();
+                break;
+            case 4:
                 salir = true;
                 break;
 
@@ -188,9 +192,6 @@ public class IuConsola {
 
     }
 
-    private void seleccionarProducto() {
-        
-    }
 
     private boolean preguntarSalir() {
         
@@ -247,6 +248,28 @@ public class IuConsola {
         }while(true);
         
     
+    }
+
+    private void clientesProductoMasBarato() {
+        Producto masBarato = controlStock.getProductoMasBarato();
+        mostrarProductoMasBarato(masBarato);
+        mostrarClientesConProductoMasBarato(masBarato);        
+        
+    }
+    
+    private void mostrarProductoMasBarato(Producto masBarato){
+        Consola.println("Producto más barato:");
+
+        Consola.println("Código - Nombre - Precio - Stock");
+        Consola.println(masBarato.getCodigo()+" - "+masBarato.getNombre()+" - "+masBarato.getPrecio()+" - "+masBarato.getStock());        
+    }
+
+    private void mostrarClientesConProductoMasBarato(Producto masBarato) {
+        ArrayList<Cliente> clientesProdMasBarato = controlClientes.compraronProducto(masBarato);
+        Consola.println("Cedula   -   Nombre   -   FechaUltimaCompra");
+        for (Cliente cliente : clientesProdMasBarato) {
+            Consola.println(cliente.getNombre());            
+        }
     }
 
 }

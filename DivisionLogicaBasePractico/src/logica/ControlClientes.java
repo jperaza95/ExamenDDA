@@ -77,4 +77,16 @@ public class ControlClientes {
         return null;
 
     }
+    
+    public ArrayList<Cliente> compraronProducto(Producto p){
+        ArrayList<Cliente> retorno = new ArrayList(); 
+        ControlFacturas cf = ControlFacturas.getInstancia();
+        for (Cliente cliente : clientes) {
+            if (cf.clienteComproProducto(cliente, p)) 
+                retorno.add(cliente);                
+            }            
+        return retorno;
+        }
+    }
+    
 }
