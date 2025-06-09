@@ -5,6 +5,7 @@
  */
 package logica;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -40,10 +41,19 @@ public class ControlFacturas {
     
     public boolean clienteComproProducto(Cliente c, Producto p){
         for (Factura factura : facturas) {
-            if(factura.getCliente().equals(c)) return true;
+            if(factura.getCliente().equals(c)&&factura.tieneProducto(p)!=null) return true;
         }
         return false;
     } 
 
+    public LocalDate fechaUltimaCompraProducto(Cliente c, Producto p){
+        for (int i = facturas.size()-1; i >= 0; i--) {
+            Factura f = facturas.get(i);
+           if(f.getCliente().equals(c) && f.tieneProducto(p)!=null ) return f.getFechaCompra();
+            
+        }
+        
+        return null;
+    } 
     
 }

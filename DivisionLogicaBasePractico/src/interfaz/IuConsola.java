@@ -252,10 +252,17 @@ public class IuConsola {
 
     private void clientesProductoMasBarato() {
         Producto masBarato = controlStock.getProductoMasBarato();
-        mostrarProductoMasBarato(masBarato);
-        mostrarClientesConProductoMasBarato(masBarato);        
+        if (masBarato==null) {
+            Consola.println("No hay productos ingresados.");
+        }else{
+            mostrarProductoMasBarato(masBarato);
+            mostrarClientesConProductoMasBarato(masBarato);        
+        
+        }
         
     }
+    
+    
     
     private void mostrarProductoMasBarato(Producto masBarato){
         Consola.println("Producto más barato:");
@@ -266,9 +273,13 @@ public class IuConsola {
 
     private void mostrarClientesConProductoMasBarato(Producto masBarato) {
         ArrayList<Cliente> clientesProdMasBarato = controlClientes.compraronProducto(masBarato);
-        Consola.println("Cedula   -   Nombre   -   FechaUltimaCompra");
-        for (Cliente cliente : clientesProdMasBarato) {
-            Consola.println(cliente.getNombre());            
+        if(clientesProdMasBarato.isEmpty()){
+            Consola.println("Ningún cliente compró el producto más barato ("+masBarato.getNombre()+")");
+        }else{
+            Consola.println("Cedula   -   Nombre   -   FechaUltimaCompra");
+            for (Cliente cliente : clientesProdMasBarato) {
+                Consola.println(cliente.getCedula()+"   -   "+cliente.getNombre()+"   -   "+ controlFacturas.fechaUltimaCompraProducto(cliente, masBarato));            
+            }        
         }
     }
 

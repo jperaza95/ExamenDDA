@@ -5,6 +5,8 @@
  */
 package logica;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author magda
@@ -89,7 +91,8 @@ public class Cliente {
        return cedula.equals(c.getCedula());
              
    }
-
    
+   
+
     
 }

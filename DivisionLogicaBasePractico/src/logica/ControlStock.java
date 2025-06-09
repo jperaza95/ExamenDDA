@@ -46,6 +46,7 @@ public class ControlStock {
 
 
     public Producto getProductoMasBarato(){
+        if(productos.isEmpty()) return null;
         
         Producto masBarato=productos.get(0);
         float precioBarato = masBarato.getPrecio();

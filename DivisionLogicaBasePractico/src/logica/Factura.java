@@ -43,6 +43,11 @@ public class Factura {
     public void setFechaCompraActual() {
         this.fechaCompra = LocalDate.now();
     }
+
+    public LocalDate getFechaCompra() {
+        return fechaCompra;
+    }
+    
     
     
 
@@ -68,7 +73,7 @@ public class Factura {
        
     }
 
-    private LineaFactura tieneProducto(Producto p){
+    public LineaFactura tieneProducto(Producto p){
         for (LineaFactura linea : lineas) {
             if(linea.tieneProducto(p)) return linea;
         }
