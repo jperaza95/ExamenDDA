@@ -4,22 +4,13 @@ import java.util.ArrayList;
 
 public class ControlStock {
 
-    private static ControlStock instancia;
 
     private ArrayList<Producto> productos = new ArrayList();
     private ArrayList<Proveedor> proveedores = new ArrayList();
     
     int proximoCodigoproducto = 0;
 
-    public static ControlStock getInstancia() {
-
-        if (instancia == null) {
-            instancia = new ControlStock();
-        }
-        return instancia;
-    }
-
-    private ControlStock() {
+    protected ControlStock(){
     }
 
     public ArrayList<Producto> getProductos() {
