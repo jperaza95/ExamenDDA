@@ -13,25 +13,12 @@ import java.util.ArrayList;
  * @author magda
  */
 public class ControlFacturas {
-    
-    private static ControlFacturas instancia; 
 
     private ArrayList<Factura> facturas = new ArrayList();
-    
-    public static ControlFacturas getInstancia(){
-    
-           if ( instancia == null){
-                instancia = new ControlFacturas();
-           }
-          return instancia;
-    }
-   
-    private ControlFacturas(){
-    
-    }
+
     
     public Factura nuevaFactura(String cedula){
-        Cliente c = ControlClientes.getInstancia().obtenerClientePorCedula(cedula);
+        Cliente c = Fachada.getInstancia().obtenerClientePorCedula(cedula);
         if (c!=null) {
             return new Factura(c);
         }

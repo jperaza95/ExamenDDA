@@ -13,21 +13,8 @@ import java.util.ArrayList;
  */
 public class ControlClientes {
 
-    private static ControlClientes instancia;
-
     private ArrayList<Cliente> clientes = new ArrayList();
 
-    public static ControlClientes getInstancia() {
-
-        if (instancia == null) {
-            instancia = new ControlClientes();
-        }
-        return instancia;
-    }
-
-    public ControlClientes() {
-
-    }
 
     public ArrayList<Cliente> getClientes() {
         return clientes;
@@ -77,9 +64,9 @@ public class ControlClientes {
     
     public ArrayList<Cliente> compraronProducto(Producto p){
         ArrayList<Cliente> retorno = new ArrayList(); 
-        ControlFacturas cf = ControlFacturas.getInstancia();
+        Fachada fachada = Fachada.getInstancia();
         for (Cliente cliente : clientes) {
-            if (cf.clienteComproProducto(cliente, p)) 
+            if (fachada.clienteComproProducto(cliente, p)) 
                 retorno.add(cliente);                
             }            
         return retorno;

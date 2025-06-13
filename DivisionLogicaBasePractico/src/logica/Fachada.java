@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class Fachada {
     private static Fachada instancia = new Fachada();
-    private ControlClientes controlClientes = ControlClientes.getInstancia();
-    private ControlFacturas controlFacturas = ControlFacturas.getInstancia();
+    private ControlClientes controlClientes = new ControlClientes();
+    private ControlFacturas controlFacturas = new ControlFacturas();
     private ControlStock controlStock = new ControlStock();
 
     

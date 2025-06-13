@@ -85,7 +85,7 @@ public class Factura {
     }
     
     public boolean agregarPorCodigo(int cantidad, int codProd){
-        Producto p = ControlStock.getInstancia().buscar(codProd);
+        Producto p = Fachada.getInstancia().buscar(codProd);
         if (p==null) return false; 
         return agregarLinea(cantidad,p);    
         

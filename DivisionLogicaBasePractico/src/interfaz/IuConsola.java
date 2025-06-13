@@ -6,6 +6,7 @@ import logica.ControlClientes;
 import logica.Cliente;
 import logica.ControlFacturas;
 import logica.ControlStock;
+import logica.Fachada;
 import logica.Factura;
 import logica.LineaFactura;
 import logica.PracticoException;
@@ -16,9 +17,8 @@ import utilidades.Consola;
 
 public class IuConsola {
 
-    ControlClientes controlClientes = ControlClientes.getInstancia();
-    ControlStock controlStock = ControlStock.getInstancia();
-    ControlFacturas controlFacturas = ControlFacturas.getInstancia();
+    Fachada fachada = Fachada.getInstancia();
+
 
     /**
      * Ejecuta la consola
@@ -94,7 +94,7 @@ public class IuConsola {
 
         unCliente.setNombre(Consola.leer("Nombre:"));
 
-        if (controlClientes.agregar(unCliente)) {
+        if (fachada.agregar(unCliente)) {
             mostrarClientes();
         } else {
             System.out.println("EL CLIENTE NO FUE INGRESADO");
@@ -106,7 +106,7 @@ public class IuConsola {
         System.out.println("=================");
         System.out.println("CLIENTES ACTUALES");
         System.out.println("=================");
-        ArrayList<Cliente> clientes = controlClientes.getClientes();
+        ArrayList<Cliente> clientes = fachada.getClientes();
         for (Cliente c : clientes) {
             System.out.println(c.getCedula() + " - " + c.getNombre());
         }
@@ -129,7 +129,7 @@ public class IuConsola {
             System.out.println("Cantidad inválida");
         }
         
-        ArrayList<Proveedor> proveedores = controlStock.getProveedores();
+        ArrayList<Proveedor> proveedores = fachada.getProveedores();
 
         int opcion = Consola.menu(proveedores);
         Proveedor prov = proveedores.get(opcion);
@@ -142,7 +142,7 @@ public class IuConsola {
             System.out.println("Precio inválido");
         }
         
-        if (controlStock.agregar(unProducto)) {
+        if (fachada.agregar(unProducto)) {
             System.out.println("Se dio de alta correctamente con código: "+unProducto.getCodigo());
             
         }else{
@@ -157,7 +157,7 @@ public class IuConsola {
         System.out.println("ALTA DE FACTURA");
         System.out.println("===============");
 
-        Factura nueva = controlFacturas.nuevaFactura(Consola.leer("Ingrese su Cedula sin puntos ni guiones: "));
+        Factura nueva = fachada.nuevaFactura(Consola.leer("Ingrese su Cedula sin puntos ni guiones: "));
 
         //Cliente clienteBuscado = controlClientes.obtenerClientePorCedula(Consola.leer("Ingrese su Cedula sin puntos ni guiones: "));
         
@@ -182,8 +182,8 @@ public class IuConsola {
         do {            
             Producto prod; 
             System.out.println("CÓDIGO DE PRODUCTO:");
-            int opcionProducto = Consola.menu(controlStock.getProductos());
-            prod = controlStock.getProductos().get(opcionProducto);
+            int opcionProducto = Consola.menu(fachada.getProductos());
+            prod = fachada.getProductos().get(opcionProducto);
             int cant;
                      
             while (!f.agregarLinea(Consola.leerInt("CANTIDAD: "), prod)) {
@@ -241,7 +241,7 @@ public class IuConsola {
             switch (opcion.toUpperCase()) {
                 
                 case "S":
-                    controlFacturas.agregar(f);
+                    fachada.agregar(f);
                     
                 case "N":
                     return;
@@ -256,7 +256,7 @@ public class IuConsola {
     }
 
     private void clientesProductoMasBarato() {
-        Producto masBarato = controlStock.getProductoMasBarato();
+        Producto masBarato = fachada.getProductoMasBarato();
         if (masBarato==null) {
             Consola.println("No hay productos ingresados.");
         }else{
@@ -277,13 +277,13 @@ public class IuConsola {
     }
 
     private void mostrarClientesConProductoMasBarato(Producto masBarato) {
-        ArrayList<Cliente> clientesProdMasBarato = controlClientes.compraronProducto(masBarato);
+        ArrayList<Cliente> clientesProdMasBarato = fachada.compraronProducto(masBarato);
         if(clientesProdMasBarato.isEmpty()){
             Consola.println("Ningún cliente compró el producto más barato ("+masBarato.getNombre()+")");
         }else{
             Consola.println("Cedula   -   Nombre   -   FechaUltimaCompra");
             for (Cliente cliente : clientesProdMasBarato) {
-                Consola.println(cliente.getCedula()+"   -   "+cliente.getNombre()+"   -   "+ controlFacturas.fechaUltimaCompraProducto(cliente, masBarato));            
+                Consola.println(cliente.getCedula()+"   -   "+cliente.getNombre()+"   -   "+ fachada.fechaUltimaCompraProducto(cliente, masBarato));            
             }        
         }
     }
