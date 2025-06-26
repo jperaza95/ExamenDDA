@@ -11,16 +11,16 @@ import javax.swing.JOptionPane;
  *
  * @author peraza
  */
-public class VentanaPrincipal extends javax.swing.JFrame {
+public class VentanaPrincipalCombo extends javax.swing.JFrame {
 
     /**
-     * Creates new form VentanaPrincipal
+     * Creates new form VentanaPrincipalCombo
      */
     private ArrayList<Dialogo> dialogos = new ArrayList();
     
     private int contador = 0;
     
-    public VentanaPrincipal() {
+    public VentanaPrincipalCombo() {
         initComponents();
         setLocationRelativeTo(null); //centra al medio del monitor
     }
@@ -35,9 +35,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         btnNuevoDialogo = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        listaVentanas = new javax.swing.JList();
         btnCerrar = new javax.swing.JButton();
+        comboVentanas = new javax.swing.JComboBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         menu1 = new javax.swing.JMenu();
         nuevoDialogo = new javax.swing.JMenuItem();
@@ -58,17 +57,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        listaVentanas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listaVentanasMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(listaVentanas);
-
         btnCerrar.setText("Cerrar");
         btnCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCerrarActionPerformed(evt);
+            }
+        });
+
+        comboVentanas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboVentanasItemStateChanged(evt);
+            }
+        });
+        comboVentanas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboVentanasActionPerformed(evt);
             }
         });
 
@@ -110,23 +113,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                         .addGap(101, 101, 101)
                         .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(75, Short.MAX_VALUE))
+                        .addGap(49, 49, 49)
+                        .addComponent(comboVentanas, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(148, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGap(62, 62, 62)
+                .addComponent(comboVentanas, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNuevoDialogo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
         );
 
-        setBounds(0, 0, 569, 434);
+        setBounds(0, 0, 1073, 434);
     }// </editor-fold>//GEN-END:initComponents
 
     private void nuevoDialogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoDialogoActionPerformed
@@ -145,21 +148,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
        nuevoDialogo();
     }//GEN-LAST:event_btnNuevoDialogoActionPerformed
 
-    private void listaVentanasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaVentanasMouseClicked
-        activarDialogo();
-    }//GEN-LAST:event_listaVentanasMouseClicked
-
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
        cerrarSeleccionado();
     }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void comboVentanasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboVentanasActionPerformed
+        //mostrarDialogos();
+    }//GEN-LAST:event_comboVentanasActionPerformed
+
+    private void comboVentanasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboVentanasItemStateChanged
+                activarDialogo();
+
+    }//GEN-LAST:event_comboVentanasItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnNuevoDialogo;
+    private javax.swing.JComboBox comboVentanas;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList listaVentanas;
     private javax.swing.JMenu menu1;
     private javax.swing.JMenu menu2;
     private javax.swing.JMenuItem nuevoDialogo;
@@ -182,12 +189,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
     }
 
-    public  void mostrarDialogos() {
-       listaVentanas.setListData(dialogos.toArray());
+    public void mostrarDialogos() {
+       comboVentanas.removeAllItems();
+       for(Dialogo d: dialogos){
+           comboVentanas.addItem(d);
+       }
+       
     }
 
     private void activarDialogo() {
-        Dialogo d = (Dialogo)listaVentanas.getSelectedValue();
+        Dialogo d = (Dialogo)comboVentanas.getSelectedItem();
         if (d!=null) d.toFront();
     }
 
@@ -197,7 +208,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     private void cerrarSeleccionado() {
-        Dialogo d = (Dialogo)listaVentanas.getSelectedValue();
+        Dialogo d = (Dialogo)comboVentanas.getSelectedItem();
         
         if (d!=null) {
             d.dispose(); //que se termine

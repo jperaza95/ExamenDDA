@@ -5,6 +5,7 @@
 package iu;
 
 import java.awt.Container;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -109,7 +110,7 @@ public class Dialogo extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCambiarMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        VentanaPrincipal vp = (VentanaPrincipal)getParent();
+        VentanaPrincipalCombo vp = (VentanaPrincipalCombo)getParent();
         vp.cierre(this);
         //vp.mostrarDialogos();
 
@@ -123,9 +124,16 @@ public class Dialogo extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void cambiarTitulo() {
+        String titulo = tfTitulo.getText();
+        if (!titulo.isEmpty()) {
+            
+        
         setTitle(tfTitulo.getText());
-        VentanaPrincipal vp = (VentanaPrincipal)getParent();
+        VentanaPrincipalCombo vp = (VentanaPrincipalCombo)getParent();
         vp.mostrarDialogos();
+        }else{
+            JOptionPane.showMessageDialog(this, "Titulo no válido");
+        }
     }
     
     @Override
