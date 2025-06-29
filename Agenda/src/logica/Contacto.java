@@ -4,6 +4,8 @@
  */
 package logica;
 
+import java.util.Date;
+
 /**
  *
  * @author peraza
@@ -12,11 +14,13 @@ public class Contacto {
     private String nombre;
     private String telefono;
     private TipoContacto tipoContacto;
+    private Date fechaCreacion;
 
     public Contacto(String nombre, String telefono, TipoContacto tipoContacto) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.tipoContacto = tipoContacto;
+        this.fechaCreacion = new Date();
     }
 
     public String getTelefono() {
@@ -25,7 +29,7 @@ public class Contacto {
 
     @Override
     public String toString() {
-        return nombre + " - " + telefono + " - " + tipoContacto;
+        return nombre + " (" + telefono + ")" + tipoContacto+" - "+ fechaCreacion;
     }
     
     

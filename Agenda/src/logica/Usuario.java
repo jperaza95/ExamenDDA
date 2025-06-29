@@ -23,6 +23,7 @@ public class Usuario {
         this.nombre = nombre;
         this.password = password;
         this.nombreCompleto = nombreCompleto;
+        agenda = new Agenda(this);
     }
     
     

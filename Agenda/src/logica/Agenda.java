@@ -12,36 +12,46 @@ import java.util.ArrayList;
  * @author peraza
  */
 public class Agenda {
+
     private Usuario dueño;
     private ArrayList<Contacto> contactos = new ArrayList();
-    
+
     public Agenda(Usuario dueño) {
         this.dueño = dueño;
     }
-    public boolean agregarContacto(String nombre, String telefono, TipoContacto tc){
-        if (!nombre.isEmpty()&&!telefono.isEmpty()&&!existeContacto(telefono)) {
-            
-            contactos.add(new Contacto(nombre,telefono,tc));
+
+    public boolean agregarContacto(String nombre, String telefono, TipoContacto tc) {
+        if (!nombre.isEmpty() && !telefono.isEmpty() && buscarContacto(telefono)==null) {
+
+            contactos.add(new Contacto(nombre, telefono, tc));
             return true;
         }
         return false;
-        
-        
-        
+
     }
 
-    
-    
-    
-    public int cantidadContactos(){
+
+    public int cantidadContactos() {
         return contactos.size();
     }
 
-    private boolean existeContacto(String telefono) {
+    public Contacto buscarContacto(String telefono) {
         for (Contacto contacto : contactos) {
-            if(contacto.getTelefono().equals(telefono)) return true;
+            if (contacto.getTelefono().equals(telefono)) {
+                return contacto;
+            }
         }
-        return false;
+        return null;
+    }
+    
+    public ArrayList<Contacto> buscarContactos(String telefono) {
+        ArrayList<Contacto> retorno = new ArrayList();
+        for (Contacto contacto : contactos) {
+            if (contacto.getTelefono().contains(telefono)) {
+                retorno.add(contacto);
+            }
+        }
+        return retorno;
     }
 
     public ArrayList<Contacto> getContactos() {
@@ -51,8 +61,7 @@ public class Agenda {
     public Usuario getDueño() {
         return dueño;
     }
-    
-    
-        
-    
+
 }
+
+
