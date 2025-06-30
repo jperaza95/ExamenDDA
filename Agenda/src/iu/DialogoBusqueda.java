@@ -4,6 +4,7 @@
  */
 package iu;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import logica.Contacto;
@@ -16,6 +17,7 @@ import logica.Usuario;
 public class DialogoBusqueda extends javax.swing.JDialog {
 
     private Usuario usuario;
+    ArrayList<Contacto> listaContactos;
     /**
      * Creates new form DialogoBusqueda
      */
@@ -23,6 +25,7 @@ public class DialogoBusqueda extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         usuario = u;
+        setTitle("Busqueda en la agenda de "+usuario.getNombreCompleto());
     }
 
     /**
@@ -40,7 +43,6 @@ public class DialogoBusqueda extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         listaResultado = new javax.swing.JList();
         lblDetalles = new javax.swing.JLabel();
-        btnVerDetalles = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -53,16 +55,12 @@ public class DialogoBusqueda extends javax.swing.JDialog {
             }
         });
 
-        jScrollPane1.setViewportView(listaResultado);
-
-        lblDetalles.setText("Detalles:");
-
-        btnVerDetalles.setText("Ver detalles");
-        btnVerDetalles.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerDetallesActionPerformed(evt);
+        listaResultado.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaResultadoValueChanged(evt);
             }
         });
+        jScrollPane1.setViewportView(listaResultado);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,17 +68,15 @@ public class DialogoBusqueda extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnVerDetalles)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnBuscar)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(54, 54, 54)
-                            .addComponent(tfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblDetalles, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnBuscar)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(54, 54, 54)
+                        .addComponent(tfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblDetalles, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,11 +89,9 @@ public class DialogoBusqueda extends javax.swing.JDialog {
                 .addComponent(btnBuscar)
                 .addGap(40, 40, 40)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnVerDetalles)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
                 .addComponent(lblDetalles)
-                .addGap(36, 36, 36))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         setBounds(0, 0, 534, 381);
@@ -107,15 +101,16 @@ public class DialogoBusqueda extends javax.swing.JDialog {
         buscarContactos();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void btnVerDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerDetallesActionPerformed
+    private void listaResultadoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaResultadoValueChanged
+        // TODO add your handling code here:
         verDetalles();
-    }//GEN-LAST:event_btnVerDetallesActionPerformed
+
+    }//GEN-LAST:event_listaResultadoValueChanged
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnVerDetalles;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDetalles;
@@ -124,17 +119,31 @@ public class DialogoBusqueda extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void buscarContactos() {
-        ArrayList<Contacto> contactos = usuario.getAgenda().buscarContactos(tfTelefono.getText());
-        if (contactos.size()==0) {
-            JOptionPane.showMessageDialog(this, "No hay resultados");
-        }else{
-            listaResultado.setListData(contactos.toArray());
+        listaContactos = usuario.getAgenda().buscarContactos(tfTelefono.getText());
+        ArrayList<String> listado = new ArrayList(); 
+        for (Contacto c : listaContactos) {
+            listado.add(formatear(c));
         }
+            listaResultado.setListData(listado.toArray());
+        
     }
 
     private void verDetalles() {
-        Contacto resultado = (Contacto)listaResultado.getSelectedValue();
+        int pos = listaResultado.getSelectedIndex();
+        if (pos==-1) {
+            lblDetalles.setText("Detalles: no hay detalles.");
+            return;
+        }
         
-        lblDetalles.setText(resultado.toString());
+        Contacto c = listaContactos.get(pos);
+        
+        String fecha = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(c.getFechaCreacion());
+        
+        lblDetalles.setText("Detalles: "+c.getNombre()+" - "+c.getTipoContacto()+" - "+  c.getTelefono()+" - "+fecha);            
+        
+    }
+
+    private String formatear(Contacto c) {
+       return c.getNombre()+" ("+c.getTelefono()+" ).";
     }
 }

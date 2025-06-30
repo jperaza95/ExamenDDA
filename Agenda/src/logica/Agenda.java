@@ -21,9 +21,11 @@ public class Agenda {
     }
 
     public boolean agregarContacto(String nombre, String telefono, TipoContacto tc) {
-        if (!nombre.isEmpty() && !telefono.isEmpty() && buscarContacto(telefono)==null) {
+        Contacto nuevo = new Contacto(nombre,telefono,tc);
+        
+        if (nuevo.validar() && !contactos.contains(nuevo)) {
 
-            contactos.add(new Contacto(nombre, telefono, tc));
+            contactos.add(nuevo);
             return true;
         }
         return false;
@@ -44,11 +46,12 @@ public class Agenda {
         return null;
     }
     
-    public ArrayList<Contacto> buscarContactos(String telefono) {
+    public ArrayList<Contacto> buscarContactos(String filtro) {
         ArrayList<Contacto> retorno = new ArrayList();
-        for (Contacto contacto : contactos) {
-            if (contacto.getTelefono().contains(telefono)) {
-                retorno.add(contacto);
+        if(filtro.isEmpty()) return retorno;
+        for (Contacto c : contactos) {
+            if (c.getNombre().indexOf(filtro)>-1 || c.getTelefono().indexOf(filtro)>-1) {
+                retorno.add(c);
             }
         }
         return retorno;

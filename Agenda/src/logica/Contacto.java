@@ -27,12 +27,43 @@ public class Contacto {
         return telefono;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public TipoContacto getTipoContacto() {
+        return tipoContacto;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+    
+    
+    public boolean validar(){
+        
+        try {
+            Double.parseDouble(telefono);      
+            
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return !nombre.trim().isEmpty() && tipoContacto!=null;
+        
+    }
+
     @Override
     public String toString() {
         return nombre + " (" + telefono + ")" + tipoContacto+" - "+ fechaCreacion;
     }
     
+    @Override
     
+    public boolean equals(Object o){
+        Contacto c = (Contacto)o;
+        return getTelefono().equals(c.getTelefono());
+    }
+
     
 
 }
