@@ -6,16 +6,19 @@ package iu;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import logica.Acceso;
 import logica.Logica;
 import logica.TipoContacto;
-import logica.Usuario;
+import logica.UsuarioAgenda;
+
 
 /**
  *
  * @author peraza
  */
 public class DialogoAgenda extends javax.swing.JDialog {
-    private Usuario usuario;
+    private Acceso acceso;
+    private UsuarioAgenda usuario;
 
     
     Logica fachada = Logica.getInstancia();
@@ -23,10 +26,11 @@ public class DialogoAgenda extends javax.swing.JDialog {
      * Creates new form DialogoCrearContacto
      */
    
-    public DialogoAgenda(java.awt.Dialog parent, boolean modal, Usuario u) {
+    public DialogoAgenda(java.awt.Frame parent, boolean modal, Acceso a) {
         super(parent, modal);
         initComponents();
-        usuario = u;
+        acceso = a;
+        usuario = a.getUsuario();
         cargarTiposContacto();
         mostrarContactosActuales();
         
@@ -55,6 +59,11 @@ public class DialogoAgenda extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CREAR CONTACTO");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         comboTipos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,6 +181,11 @@ public class DialogoAgenda extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfNombreActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        logout();
+       
+    }//GEN-LAST:event_formWindowClosing
+
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -218,6 +232,10 @@ public class DialogoAgenda extends javax.swing.JDialog {
     private void setearTitulo() {
        setTitle(usuario.getNombreCompleto().toUpperCase()+" - Contactos: "+usuario.getAgenda().cantidadContactos());
 
+    }
+
+    private void logout() {
+         Logica.getInstancia().logout(acceso);
     }
     
     

@@ -29,19 +29,29 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        itemLogin = new javax.swing.JMenuItem();
+        itemLoginAgenda = new javax.swing.JMenuItem();
+        itemLoginAdministrador = new javax.swing.JCheckBoxMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jMenu1.setText("Usuario");
 
-        itemLogin.setText("Login");
-        itemLogin.addActionListener(new java.awt.event.ActionListener() {
+        itemLoginAgenda.setText("Login Agenda");
+        itemLoginAgenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemLoginActionPerformed(evt);
+                itemLoginAgendaActionPerformed(evt);
             }
         });
-        jMenu1.add(itemLogin);
+        jMenu1.add(itemLoginAgenda);
+
+        itemLoginAdministrador.setSelected(true);
+        itemLoginAdministrador.setText("Login Administrador");
+        itemLoginAdministrador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemLoginAdministradorActionPerformed(evt);
+            }
+        });
+        jMenu1.add(itemLoginAdministrador);
 
         jMenuBar1.add(jMenu1);
 
@@ -61,19 +71,28 @@ public class Menu extends javax.swing.JFrame {
         setBounds(0, 0, 416, 308);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void itemLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLoginActionPerformed
-        login();
-    }//GEN-LAST:event_itemLoginActionPerformed
+    private void itemLoginAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLoginAgendaActionPerformed
+        loginAgenda();
+    }//GEN-LAST:event_itemLoginAgendaActionPerformed
+
+    private void itemLoginAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLoginAdministradorActionPerformed
+        loginAdmin();
+    }//GEN-LAST:event_itemLoginAdministradorActionPerformed
 
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem itemLogin;
+    private javax.swing.JCheckBoxMenuItem itemLoginAdministrador;
+    private javax.swing.JMenuItem itemLoginAgenda;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 
-    private void login() {
-        new DialogoLogin(this, false).setVisible(true); //modal=true bloquea las otras ventanas.
+    private void loginAgenda() {
+        new LoginAgenda(this, false).setVisible(true); //modal=true bloquea las otras ventanas.
+    }
+
+    private void loginAdmin() {
+        new LoginAdmin(this, false).setVisible(true);
     }
 }

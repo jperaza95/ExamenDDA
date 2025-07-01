@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import logica.Contacto;
-import logica.Usuario;
+import logica.UsuarioAgenda;
 
 /**
  *
@@ -16,12 +16,12 @@ import logica.Usuario;
  */
 public class DialogoBusqueda extends javax.swing.JDialog {
 
-    private Usuario usuario;
+    private UsuarioAgenda usuario;
     ArrayList<Contacto> listaContactos;
     /**
      * Creates new form DialogoBusqueda
      */
-    public DialogoBusqueda(java.awt.Dialog parent, boolean modal, Usuario u) {
+    public DialogoBusqueda(java.awt.Dialog parent, boolean modal, UsuarioAgenda u) {
         super(parent, modal);
         initComponents();
         usuario = u;

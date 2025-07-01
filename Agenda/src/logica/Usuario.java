@@ -8,22 +8,16 @@ package logica;
  *
  * @author peraza
  */
-public class Usuario {
+public abstract class Usuario {
     private String nombre;
     private String password;
     private String nombreCompleto;
-    private Agenda agenda;
-
     
-    public Usuario(){
-        agenda = new Agenda(this);
-    }
-
+    
     public Usuario(String nombre, String password, String nombreCompleto) {
         this.nombre = nombre;
         this.password = password;
         this.nombreCompleto = nombreCompleto;
-        agenda = new Agenda(this);
     }
     
     
@@ -51,13 +45,5 @@ public class Usuario {
     public void setNombreCompleto(String nombreCompleto) {
         this.nombreCompleto = nombreCompleto;
     }
-
-    public Agenda getAgenda() {
-        return agenda;
-    }
     
-    
-        
-        
-
 }

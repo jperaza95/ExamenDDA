@@ -8,21 +8,23 @@ package iu;
 import javax.swing.JOptionPane;
 import logica.Logica;
 import logica.Usuario;
+import logica.UsuarioAgenda;
 
 /**
  *
  * @author peraza
  */
-public class DialogoLogin extends javax.swing.JDialog {
+public abstract class LoginAbstracto extends javax.swing.JDialog {
 
     /**
      * Creates new form DialogoLogin
      */
-    public DialogoLogin(java.awt.Frame parent, boolean modal) {
+    public LoginAbstracto(java.awt.Frame parent, boolean modal, String tipoUsuario) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(parent); //centrado con el padre
-    }
+        setTitle("Ingreso para "+tipoUsuario);
+   }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -120,14 +122,23 @@ public class DialogoLogin extends javax.swing.JDialog {
         String nombre = tfUsuario.getText();
         String pass = new String(tfPassword.getPassword());
         
-        Usuario usuario = Logica.getInstancia().login(pass, pass);
-        if (usuario==null) {
+        //UsuarioAgenda usuario = Logica.getInstancia().loginAgenda(pass, pass);
+        
+        Object retorno = llamarALoginDeLaLogica(nombre, pass);
+        
+        if (retorno==null) {
             JOptionPane.showMessageDialog(this, "Login Inválido");
         }else{            
             dispose(); //Cierro el dialogoLogin
-            //mostrar el otro dialogo
-            new DialogoAgenda(this, true, usuario).setVisible(true);
+            ejecutarProximoCasoUso(retorno); // Object, puede ser admin o acceso
+            //new DialogoAgenda(this, true, usuario).setVisible(true);
             
         }
     }
+
+    public abstract Object llamarALoginDeLaLogica(String nom, String pwd);
+
+    public abstract void ejecutarProximoCasoUso(Object retorno);
+
+
 }

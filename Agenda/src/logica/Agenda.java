@@ -13,10 +13,10 @@ import java.util.ArrayList;
  */
 public class Agenda {
 
-    private Usuario dueño;
+    private UsuarioAgenda dueño;
     private ArrayList<Contacto> contactos = new ArrayList();
 
-    public Agenda(Usuario dueño) {
+    public Agenda(UsuarioAgenda dueño) {
         this.dueño = dueño;
     }
 
@@ -61,7 +61,7 @@ public class Agenda {
         return contactos;
     }
 
-    public Usuario getDueño() {
+    public UsuarioAgenda getDueño() {
         return dueño;
     }
 

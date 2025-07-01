@@ -23,12 +23,12 @@ public class Logica {
         return instancia;
     }
 
-    public void agregar(Usuario u) {
+    public void agregar(UsuarioAgenda u) {
         su.agregar(u);
     }
 
-    public Usuario login(String usr, String pwd) {
-        return su.login(usr, pwd);
+    public Acceso loginAgenda(String usr, String pwd) {
+        return su.loginAgenda(usr, pwd);
     }
 
     public void agregar(TipoContacto tc) {
@@ -42,6 +42,24 @@ public class Logica {
     public ArrayList<TipoContacto> getTiposContacto() {
         return sa.getTiposContacto();
     }
+
+    public void agregar(Administrador u) {
+        su.agregar(u);
+    }
+
+    public Administrador loginAdmin(String usr, String pwd) {
+        return su.loginAdmin(usr, pwd);
+    }
+
+    public ArrayList<Acceso> getAccesos() {
+        return su.getAccesos();
+    }
+
+    public void logout(Acceso a) {
+        su.logout(a);
+    }
+    
+    
     
     
     

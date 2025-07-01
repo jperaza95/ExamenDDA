@@ -4,9 +4,10 @@
  */
 package datosPrueba;
 
+import logica.Administrador;
 import logica.Logica;
 import logica.TipoContacto;
-import logica.Usuario;
+import logica.UsuarioAgenda;
 
 /**
  *
@@ -19,9 +20,14 @@ public class CargaDatos {
     public static void ejecutar(){
         
         Logica logica = Logica.getInstancia();
-        logica.agregar(new Usuario("a","a","Ana"));
-        logica.agregar(new Usuario("b","b","Beatriz"));
-        logica.agregar(new Usuario("c","c","Carlos"));
+        logica.agregar(new UsuarioAgenda("a","a","Ana"));
+        logica.agregar(new UsuarioAgenda("b","b","Beatriz"));
+        logica.agregar(new UsuarioAgenda("c","c","Carlos"));
+        
+        logica.agregar(new Administrador("z","z","Zulma"));
+        logica.agregar(new Administrador("x","x","Xavier"));
+        logica.agregar(new Administrador("y","y","Yildiz"));
+        
 
         
         
