@@ -12,21 +12,21 @@ import java.util.Date;
  */
 public class Contacto {
     private String nombre;
-    private String telefono;
+    private Telefono telefono;
     private TipoContacto tipoContacto;
     private Date fechaCreacion;
 
-    public Contacto(String nombre, String telefono, TipoContacto tipoContacto) {
+    public Contacto(String nombre, String numero, TipoContacto tipoContacto, TipoTelefono tipoTel) {
         this.nombre = nombre;
-        this.telefono = telefono;
+        this.telefono = crearTelefono(numero,tipoTel);//new Telefono(numero,tipoTel);
         this.tipoContacto = tipoContacto;
         this.fechaCreacion = new Date();
     }
 
-    public String getTelefono() {
+    public Telefono getTelefono() {
         return telefono;
     }
-
+    
     public String getNombre() {
         return nombre;
     }
@@ -42,19 +42,14 @@ public class Contacto {
     
     public boolean validar(){
         
-        try {
-            Double.parseDouble(telefono);      
-            
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        return !nombre.trim().isEmpty() && tipoContacto!=null;
+        
+        return !nombre.trim().isEmpty() && tipoContacto!=null && telefono.validar();
         
     }
 
     @Override
     public String toString() {
-        return nombre + " (" + telefono + ")" + tipoContacto+" - "+ fechaCreacion;
+        return nombre + " (" + telefono.getNumero() + ")";
     }
     
     @Override
@@ -62,6 +57,14 @@ public class Contacto {
     public boolean equals(Object o){
         Contacto c = (Contacto)o;
         return getTelefono().equals(c.getTelefono());
+    }
+
+    private Telefono crearTelefono(String numero, TipoTelefono tipoTel) {
+        if (tipoTel.getNombre().equals("Fijo"))return new Fijo(tipoTel,numero);
+        if (tipoTel.getNombre().equals("Celular"))return new Celular(tipoTel,numero);
+        if (tipoTel.getNombre().equals("Internacional"))return new Internacional(tipoTel,numero);
+        
+        return null;
     }
 
     

@@ -12,10 +12,15 @@ import java.util.ArrayList;
  */
 public class SistemaAgendas {
     private ArrayList<TipoContacto> tiposContacto = new ArrayList();
+    private ArrayList<TipoTelefono> tiposTelefono = new ArrayList();
     protected SistemaAgendas(){};
     
     public void agregar(TipoContacto tc){
         tiposContacto.add(tc);
+    }
+    
+    public void agregar(TipoTelefono tt){
+    tiposTelefono.add(tt);
     }
     
     public TipoContacto obtenerTipoContacto(String nombre){
@@ -29,6 +34,11 @@ public class SistemaAgendas {
     public ArrayList<TipoContacto> getTiposContacto() {
         return tiposContacto;
     }
+
+    public ArrayList<TipoTelefono> getTiposTelefono() {
+        return tiposTelefono;
+    }
+    
     
     
 }

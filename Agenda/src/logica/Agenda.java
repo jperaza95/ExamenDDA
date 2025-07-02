@@ -20,8 +20,8 @@ public class Agenda {
         this.dueño = dueño;
     }
 
-    public boolean agregarContacto(String nombre, String telefono, TipoContacto tc) {
-        Contacto nuevo = new Contacto(nombre,telefono,tc);
+    public boolean agregarContacto(String nombre, String telefono, TipoContacto tc, TipoTelefono tipoTel) {
+        Contacto nuevo = new Contacto(nombre,telefono,tc,tipoTel);
         
         if (nuevo.validar() && !contactos.contains(nuevo)) {
 
@@ -50,7 +50,7 @@ public class Agenda {
         ArrayList<Contacto> retorno = new ArrayList();
         if(filtro.isEmpty()) return retorno;
         for (Contacto c : contactos) {
-            if (c.getNombre().indexOf(filtro)>-1 || c.getTelefono().indexOf(filtro)>-1) {
+            if (c.getNombre().indexOf(filtro)>-1 || c.getTelefono().getNumero().indexOf(filtro)>-1) {
                 retorno.add(c);
             }
         }

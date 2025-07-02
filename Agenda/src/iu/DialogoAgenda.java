@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import logica.Acceso;
 import logica.Logica;
 import logica.TipoContacto;
+import logica.TipoTelefono;
 import logica.UsuarioAgenda;
 
 
@@ -32,6 +33,7 @@ public class DialogoAgenda extends javax.swing.JDialog {
         acceso = a;
         usuario = a.getUsuario();
         cargarTiposContacto();
+        cargarTiposTelefono();
         mostrarContactosActuales();
         
     }
@@ -242,7 +244,7 @@ public class DialogoAgenda extends javax.swing.JDialog {
 
     private void crearContacto() {
 
-        if (usuario.getAgenda().agregarContacto(tfNombre.getText(), tfTelefono.getText(), (TipoContacto)comboTipoContacto.getSelectedItem())) {
+        if (usuario.getAgenda().agregarContacto(tfNombre.getText(), tfTelefono.getText(), (TipoContacto)comboTipoContacto.getSelectedItem(), (TipoTelefono)comboTipoTelefono.getSelectedItem())) {
             JOptionPane.showMessageDialog(this, "Contacto ingresado");
             mostrarContactosActuales();
         }else{
@@ -265,6 +267,14 @@ public class DialogoAgenda extends javax.swing.JDialog {
 
     private void logout() {
          Logica.getInstancia().logout(acceso);
+    }
+
+    private void cargarTiposTelefono() {
+        ArrayList<TipoTelefono> tiposTelefono = fachada.getTiposTelefono();
+        
+        for(TipoTelefono tt : tiposTelefono){
+            comboTipoTelefono.addItem(tt);
+        }
     }
     
     

@@ -7,6 +7,7 @@ package datosPrueba;
 import logica.Administrador;
 import logica.Logica;
 import logica.TipoContacto;
+import logica.TipoTelefono;
 import logica.UsuarioAgenda;
 
 /**
@@ -34,6 +35,10 @@ public class CargaDatos {
         logica.agregar(new TipoContacto("Particular"));
         logica.agregar(new TipoContacto("Laboral"));
         logica.agregar(new TipoContacto("Familiar"));
+        
+        logica.agregar(new TipoTelefono("Fijo"));
+        logica.agregar(new TipoTelefono("Celular"));
+        logica.agregar(new TipoTelefono("Internacional"));
         
        
         

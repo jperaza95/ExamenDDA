@@ -58,6 +58,14 @@ public class Logica {
     public void logout(Acceso a) {
         su.logout(a);
     }
+
+    public void agregar(TipoTelefono tt) {
+        sa.agregar(tt);
+    }
+
+    public ArrayList<TipoTelefono> getTiposTelefono() {
+        return sa.getTiposTelefono();
+    }
     
     
     
