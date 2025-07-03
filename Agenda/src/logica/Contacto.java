@@ -63,8 +63,20 @@ public class Contacto {
         if (tipoTel.getNombre().equals("Fijo"))return new Fijo(tipoTel,numero);
         if (tipoTel.getNombre().equals("Celular"))return new Celular(tipoTel,numero);
         if (tipoTel.getNombre().equals("Internacional"))return new Internacional(tipoTel,numero);
+        /*
+        Fuera del alcance del curso
+        try {
+            Class c = Class.forName("logica."+tipoTel.getNombre());
+            Telefono t = (Telefono)c.newInstance();
+            t.setNumero(numero);
+            t.setTipo(tipoTel);
+            return t;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }*/
         
-        return null;
+
     }
 
     

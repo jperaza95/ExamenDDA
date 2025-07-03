@@ -18,6 +18,15 @@ public abstract class Telefono {
         this.numero = numero;
     }
 
+    public Telefono() {
+    }
+
+    public void setTipo(TipoTelefono tipo) {
+        this.tipo = tipo;
+    }
+    
+    
+
     public TipoTelefono getTipo() {
         return tipo;
     }

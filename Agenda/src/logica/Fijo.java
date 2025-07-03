@@ -14,6 +14,11 @@ public class Fijo extends Telefono{
         super(tipo, numero);
     }
 
+    public Fijo() {
+    }
+    
+    
+
     @Override
     public boolean validar() {
        return getNumero().length()==8 && esNumerico();

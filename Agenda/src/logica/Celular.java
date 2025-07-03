@@ -13,6 +13,9 @@ public class Celular extends Telefono {
     public Celular(TipoTelefono tipo, String numero) {
         super(tipo, numero);
     }
+
+    public Celular() {
+    }
     
     
 
