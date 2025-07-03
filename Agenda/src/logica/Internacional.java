@@ -21,20 +21,20 @@ public class Internacional extends Telefono {
     
     
     @Override
-    public boolean validar() {
+    public void validar() throws AgendaException{
         int desde = -1;
         if(getNumero().startsWith("+")) desde = 1;
         else if(getNumero().startsWith("00")) desde = 2;
         
-        if(desde == -1) return false;
+        if(desde == -1) throw new AgendaException("El número debe comenzar con + o 00.");
         char c;
         int digitos=0;
         for(int x=desde; x<getNumero().length();x++){
             c=getNumero().charAt(x);
-            if(c!=' ' && !Character.isDigit(c)) return false;
+            if(c!=' ' && !Character.isDigit(c)) throw new AgendaException("Solo puede ingresar números o espacios.");
             if(Character.isDigit(c)) digitos++;
         }
-        return digitos>=10;
+        if(digitos<10) throw new AgendaException("Debe ingresar al menos 10 dígitos.");
     }
     
 //        @Override

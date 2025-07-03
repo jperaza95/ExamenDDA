@@ -20,8 +20,10 @@ public class Celular extends Telefono {
     
 
     @Override
-    public boolean validar() {
-        return getNumero().length()==9 && esNumerico() && getNumero().startsWith("09");
+    public void validar() throws AgendaException{
+        if (getNumero().length()!=9 || !esNumerico()) throw new AgendaException("Debe ingresar 9 dígitos");
+        if (!getNumero().startsWith("09")) throw new AgendaException("El número debe comenzar con 09");
+                
     }
     
 }

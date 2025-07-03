@@ -40,11 +40,13 @@ public class Contacto {
     }
     
     
-    public boolean validar(){
+    public void validar() throws AgendaException{
         
-        
-        return !nombre.trim().isEmpty() && tipoContacto!=null && telefono.validar();
-        
+        if(nombre.trim().isEmpty()) throw new AgendaException("Falta el nombre del contacto");
+        if(tipoContacto==null) throw new AgendaException("Falta el tipo de Contacto");
+        telefono.validar();      
+
+               
     }
 
     @Override
@@ -63,6 +65,7 @@ public class Contacto {
         if (tipoTel.getNombre().equals("Fijo"))return new Fijo(tipoTel,numero);
         if (tipoTel.getNombre().equals("Celular"))return new Celular(tipoTel,numero);
         if (tipoTel.getNombre().equals("Internacional"))return new Internacional(tipoTel,numero);
+        return null;
         /*
         Fuera del alcance del curso
         try {
@@ -76,7 +79,7 @@ public class Contacto {
             return null;
         }*/
         
-
+        
     }
 
     

@@ -20,18 +20,24 @@ public class Agenda {
         this.dueño = dueño;
     }
 
-    public boolean agregarContacto(String nombre, String telefono, TipoContacto tc, TipoTelefono tipoTel) {
-        Contacto nuevo = new Contacto(nombre,telefono,tc,tipoTel);
+    public void agregarContacto(String nombre, String telefono, TipoContacto tc, TipoTelefono tipoTel) throws AgendaException{
+        /*Contacto nuevo = new Contacto(nombre,telefono,tc,tipoTel);
         
         if (nuevo.validar() && !contactos.contains(nuevo)) {
 
             contactos.add(nuevo);
             return true;
         }
-        return false;
+        return false;*/
+        
+        Contacto nuevo = new Contacto(nombre,telefono,tc,tipoTel);
+        nuevo.validar();
+        if(contactos.contains(nuevo)) throw new AgendaException("Ya existe el contacto");
+        contactos.add(nuevo);
 
     }
 
+    
 
     public int cantidadContactos() {
         return contactos.size();

@@ -20,8 +20,8 @@ public class Fijo extends Telefono{
     
 
     @Override
-    public boolean validar() {
-       return getNumero().length()==8 && esNumerico();
+    public void validar() throws AgendaException{
+       if(getNumero().length()!=8 || !esNumerico()) throw new AgendaException("Debe ingresar 8 dígitos.");
                 
     }
     

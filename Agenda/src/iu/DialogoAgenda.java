@@ -7,6 +7,7 @@ package iu;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import logica.Acceso;
+import logica.AgendaException;
 import logica.Logica;
 import logica.TipoContacto;
 import logica.TipoTelefono;
@@ -243,14 +244,23 @@ public class DialogoAgenda extends javax.swing.JDialog {
     }
 
     private void crearContacto() {
+        
+        try {
+            usuario.getAgenda().agregarContacto(tfNombre.getText(), tfTelefono.getText(), (TipoContacto)comboTipoContacto.getSelectedItem(), (TipoTelefono)comboTipoTelefono.getSelectedItem());
+            JOptionPane.showMessageDialog(this, "Contacto ingresado");
+            mostrarContactosActuales();
 
-        if (usuario.getAgenda().agregarContacto(tfNombre.getText(), tfTelefono.getText(), (TipoContacto)comboTipoContacto.getSelectedItem(), (TipoTelefono)comboTipoTelefono.getSelectedItem())) {
+        } catch (AgendaException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
+        /*if (usuario.getAgenda().agregarContacto(tfNombre.getText(), tfTelefono.getText(), (TipoContacto)comboTipoContacto.getSelectedItem(), (TipoTelefono)comboTipoTelefono.getSelectedItem())) {
             JOptionPane.showMessageDialog(this, "Contacto ingresado");
             mostrarContactosActuales();
         }else{
             JOptionPane.showMessageDialog(this, "Error");
 
-        }
+        }*/
         
     }
 

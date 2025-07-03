@@ -55,6 +55,6 @@ public abstract class Telefono {
         }
     }
 
-    public abstract boolean validar();
+    public abstract void validar() throws AgendaException;
 
 }
