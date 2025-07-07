@@ -7,18 +7,21 @@ package iu;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import logica.Acceso;
+import logica.Agenda;
 import logica.AgendaException;
 import logica.Logica;
 import logica.TipoContacto;
 import logica.TipoTelefono;
 import logica.UsuarioAgenda;
+import utilidades.Observable;
+import utilidades.Observador;
 
 
 /**
  *
  * @author peraza
  */
-public class DialogoAgenda extends javax.swing.JDialog {
+public class DialogoAgenda extends javax.swing.JDialog implements Observador{
     private Acceso acceso;
     private UsuarioAgenda usuario;
 
@@ -35,8 +38,8 @@ public class DialogoAgenda extends javax.swing.JDialog {
         usuario = a.getUsuario();
         cargarTiposContacto();
         cargarTiposTelefono();
-        mostrarContactosActuales();
-        
+        mostrarEstado();
+        usuario.getAgenda().agregarObservador(this);
     }
 
     /**
@@ -248,7 +251,6 @@ public class DialogoAgenda extends javax.swing.JDialog {
         try {
             usuario.getAgenda().agregarContacto(tfNombre.getText(), tfTelefono.getText(), (TipoContacto)comboTipoContacto.getSelectedItem(), (TipoTelefono)comboTipoTelefono.getSelectedItem());
             JOptionPane.showMessageDialog(this, "Contacto ingresado");
-            mostrarContactosActuales();
 
         } catch (AgendaException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -256,7 +258,7 @@ public class DialogoAgenda extends javax.swing.JDialog {
 
         /*if (usuario.getAgenda().agregarContacto(tfNombre.getText(), tfTelefono.getText(), (TipoContacto)comboTipoContacto.getSelectedItem(), (TipoTelefono)comboTipoTelefono.getSelectedItem())) {
             JOptionPane.showMessageDialog(this, "Contacto ingresado");
-            mostrarContactosActuales();
+            mostrarEstado();
         }else{
             JOptionPane.showMessageDialog(this, "Error");
 
@@ -264,7 +266,7 @@ public class DialogoAgenda extends javax.swing.JDialog {
         
     }
 
-    private void mostrarContactosActuales() {
+    private void mostrarEstado() {
 
         setearTitulo();
         listContactos.setListData(usuario.getAgenda().getContactos().toArray());
@@ -287,5 +289,9 @@ public class DialogoAgenda extends javax.swing.JDialog {
         }
     }
     
-    
+    public void actualizar(Observable origen, Object evento){
+        if (evento.equals(Agenda.Eventos.listaContactos)) {
+            mostrarEstado();
+        }
+    }
 }

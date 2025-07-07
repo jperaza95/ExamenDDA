@@ -4,10 +4,31 @@
  */
 package museo;
 
+import utilidades.Observable;
+import utilidades.Observador;
+
 /**
  *
  * @author julio
  */
-public class Trampa {
+public class Trampa implements Observador{
+    private void abrir(){
+        System.out.println("ABRIR!!");
+    }
+    private void cerrar(){
+        System.out.println("CERRAR!!");
+    }    
+    
+    @Override
+    
+    public void actualizar(Observable origen, Object evento){
+        Sensor.Eventos evt = (Sensor.Eventos)evento;
+        
+        switch(evt){
+            case actividad:abrir();break;
+            case reposo:cerrar();break;
+        }
+        
+    }
     
 }

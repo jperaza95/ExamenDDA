@@ -14,7 +14,14 @@ public class Museo {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Sensor s = new Sensor();
+        s.agregarObservador(new Alarma());
+        s.agregarObservador(new Alarma());
+        s.agregarObservador(new Trampa());
+        s.agregarObservador(new AlarmaSonora());
+        s.agregarObservador(new ServicioTecnico());
+
+        s.on();
     }
     
 }

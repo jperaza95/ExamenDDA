@@ -13,6 +13,9 @@ import utilidades.Observable;
  */
 public class Sensor extends Observable{
     private boolean actividad = false;
+
+
+    public enum Eventos{actividad,reposo,bajaBateria}
     
     public void on(){
         System.out.println("---ON---");
@@ -20,10 +23,11 @@ public class Sensor extends Observable{
         detectarMovimiento();
         pausa(3);
         detectarReposo();
+        pausa(1);
+        bajaBateria();
         System.out.println("---FIN---");
     }
     
-    public enum Eventos{actividad,reposo}
     
     public void off(){
         System.out.println("Sensor apagado");
@@ -49,5 +53,9 @@ public class Sensor extends Observable{
         avisar(Eventos.reposo);
     }
     
+    private void bajaBateria() {
+
+        avisar(Eventos.bajaBateria);
+    }
   
 }

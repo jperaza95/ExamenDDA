@@ -18,6 +18,7 @@ public class Inicio {
     public static void main(String[] args) {
        CargaDatos.ejecutar();
        new Menu().setVisible(true);
+       
     }
     
 }

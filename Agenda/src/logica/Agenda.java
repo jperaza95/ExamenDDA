@@ -6,12 +6,13 @@ package logica;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import utilidades.Observable;
 
 /**
  *
  * @author peraza
  */
-public class Agenda {
+public class Agenda extends Observable{
 
     private UsuarioAgenda dueño;
     private ArrayList<Contacto> contactos = new ArrayList();
@@ -19,21 +20,16 @@ public class Agenda {
     public Agenda(UsuarioAgenda dueño) {
         this.dueño = dueño;
     }
+    
+    public enum Eventos{listaContactos};
 
     public void agregarContacto(String nombre, String telefono, TipoContacto tc, TipoTelefono tipoTel) throws AgendaException{
-        /*Contacto nuevo = new Contacto(nombre,telefono,tc,tipoTel);
-        
-        if (nuevo.validar() && !contactos.contains(nuevo)) {
 
-            contactos.add(nuevo);
-            return true;
-        }
-        return false;*/
-        
         Contacto nuevo = new Contacto(nombre,telefono,tc,tipoTel);
         nuevo.validar();
         if(contactos.contains(nuevo)) throw new AgendaException("Ya existe el contacto");
         contactos.add(nuevo);
+        avisar(Eventos.listaContactos);
 
     }
 

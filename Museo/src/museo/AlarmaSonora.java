@@ -11,22 +11,21 @@ import utilidades.Observador;
  *
  * @author julio
  */
-public class Alarma implements Observador{
-
-
-
-    
-    private void llamar(String msg) {
-        System.out.println("Llamada con mensaje... "+msg);
+public class AlarmaSonora implements Observador{
+    private void sonar(){
+        System.out.println("SONARRR");
     }
-
+    private void mute(){
+        System.out.println("MUTE!! ");
+    }
     @Override
     public void actualizar(Observable origen, Object evento) {
-        System.out.println("ACTUALIZAR");
-        switch((Sensor.Eventos)evento){
-            case actividad:llamar("Actividad");break;
-            case reposo:llamar("Reposo");break;
+        Sensor.Eventos evt = (Sensor.Eventos)evento;
+        
+        switch (evt) {
+            case actividad: sonar(); break;
+            case reposo: mute(); break;
         }
+        
     }
-    
 }
