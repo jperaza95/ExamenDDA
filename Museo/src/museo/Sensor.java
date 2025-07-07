@@ -5,29 +5,49 @@
 package museo;
 
 import java.util.ArrayList;
+import utilidades.Observable;
 
 /**
  *
  * @author julio
  */
-public class Sensor {
-    private boolean movimiento;
+public class Sensor extends Observable{
+    private boolean actividad = false;
     
     public void on(){
-        System.out.println("Sensor encendido");
-        //implementar que ejecute Detectar movimiento y reposo
+        System.out.println("---ON---");
+        pausa(2);
+        detectarMovimiento();
+        pausa(3);
+        detectarReposo();
+        System.out.println("---FIN---");
     }
+    
+    public enum Eventos{actividad,reposo}
     
     public void off(){
         System.out.println("Sensor apagado");
     }
     
-    public ArrayList<EscuchadorSensor> escuchadores= new ArrayList();
-    
-    private void avisar(){
-        for (EscuchadorSensor e : escuchadores) {
-            if(movimiento) e.hayActividad();
-            else e.hayReposo();
+
+    private void pausa(int sec) {
+        try {
+            Thread.sleep(sec*1000);
+        } catch (InterruptedException e) {
         }
     }
+
+    private void detectarMovimiento() {
+        System.out.println("---MOVIMIENTO DETECTADO---");
+        actividad=true;
+        avisar(Eventos.actividad);
+    }
+
+    private void detectarReposo() {
+        System.out.println("---REPOSO---");
+        actividad=false;
+        avisar(Eventos.reposo);
+    }
+    
+  
 }
