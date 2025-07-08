@@ -4,10 +4,10 @@
  */
 package inicio;
 
-import iuEscritorio.ContadorFrame;
+import vistaEscritorio.ContadorFrame;
 import iuEscritorio.VentanaNumeros;
-import logica.Contador;
-import logica.LogicaNumeros;
+import modelo.Contador;
+import modelo.LogicaNumeros;
 
 /**
  *
@@ -19,18 +19,18 @@ public class Inicio {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //Contador logica = new Contador();
-//        new ContadorFrame(logica).setVisible(true);
-//        new ContadorFrame(logica).setVisible(true);
-//        new ContadorFrame(logica).setVisible(true);
+        Contador logica = new Contador();
+        new ContadorFrame(logica).setVisible(true);
+        new ContadorFrame(logica).setVisible(true);
+        new ContadorFrame(logica).setVisible(true);
                 
         //InterfazUsuarioContadorA iu = new InterfazUsuarioContadorA(logica);
         //iu.iniciar();
         
-        LogicaNumeros logica = new LogicaNumeros();
+        /*LogicaNumeros logica = new LogicaNumeros();
         new VentanaNumeros(logica).setVisible(true);
         new VentanaNumeros(logica).setVisible(true);
-        new VentanaNumeros(logica).setVisible(true);
+        new VentanaNumeros(logica).setVisible(true);*/
         
     }
     

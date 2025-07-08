@@ -5,7 +5,7 @@
 package iuEscritorio;
 
 import javax.swing.JOptionPane;
-import logica.LogicaNumeros;
+import modelo.LogicaNumeros;
 import utilidades.Observable;
 import utilidades.Observador;
 
