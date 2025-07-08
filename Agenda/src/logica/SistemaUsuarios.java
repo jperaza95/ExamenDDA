@@ -39,6 +39,7 @@ public class SistemaUsuarios {
         if (u!=null){
             a = new Acceso(u);
             accesos.add(a);
+            Logica.getInstancia().avisar(Logica.Eventos.listaLogueados);
         }
         return a;
     }
@@ -63,5 +64,6 @@ public class SistemaUsuarios {
     
     public void logout(Acceso a){
         accesos.remove(a);
+        Logica.getInstancia().avisar(Logica.Eventos.listaLogueados);
     }
 }

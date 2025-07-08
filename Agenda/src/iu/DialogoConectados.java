@@ -6,12 +6,14 @@ package iu;
 
 import logica.Administrador;
 import logica.Logica;
+import utilidades.Observable;
+import utilidades.Observador;
 
 /**
  *
  * @author peraza
  */
-public class DialogoConectados extends javax.swing.JDialog {
+public class DialogoConectados extends javax.swing.JDialog implements Observador{
 
     /**
      * Creates new form DialogoConectados
@@ -21,6 +23,7 @@ public class DialogoConectados extends javax.swing.JDialog {
         initComponents();
         setTitle("Usuario: "+admin.getNombreCompleto());
         mostrarConectados();
+        Logica.getInstancia().agregarObservador(this);
     }
 
     /**
@@ -34,18 +37,15 @@ public class DialogoConectados extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         listaConectados = new javax.swing.JList();
-        btnActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jScrollPane1.setViewportView(listaConectados);
-
-        btnActualizar.setText("Actualizar");
-        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarActionPerformed(evt);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
+
+        jScrollPane1.setViewportView(listaConectados);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -53,36 +53,38 @@ public class DialogoConectados extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(78, 78, 78)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnActualizar)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(272, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(106, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(62, 62, 62)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67)
-                .addComponent(btnActualizar)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
-        setBounds(0, 0, 580, 466);
+        setBounds(0, 0, 515, 328);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        mostrarConectados();
-    }//GEN-LAST:event_btnActualizarActionPerformed
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        Logica.getInstancia().quitarObservador(this);
+    }//GEN-LAST:event_formWindowClosing
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList listaConectados;
     // End of variables declaration//GEN-END:variables
 
     private void mostrarConectados() {
       listaConectados.setListData(Logica.getInstancia().getAccesos().toArray());
+    }
+    
+    @Override
+    
+    public void actualizar(Observable origen, Object evento){
+        if(evento.equals(Logica.Eventos.listaLogueados)) mostrarConectados();
     }
 }

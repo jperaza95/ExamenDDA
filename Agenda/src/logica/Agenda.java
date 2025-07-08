@@ -30,6 +30,7 @@ public class Agenda extends Observable{
         if(contactos.contains(nuevo)) throw new AgendaException("Ya existe el contacto");
         contactos.add(nuevo);
         avisar(Eventos.listaContactos);
+        Logica.getInstancia().avisar(Logica.Eventos.listaLogueados);
 
     }
 
@@ -50,7 +51,7 @@ public class Agenda extends Observable{
     
     public ArrayList<Contacto> buscarContactos(String filtro) {
         ArrayList<Contacto> retorno = new ArrayList();
-        if(filtro.isEmpty()) return retorno;
+        if(filtro.isEmpty()) return contactos;
         for (Contacto c : contactos) {
             if (c.getNombre().indexOf(filtro)>-1 || c.getTelefono().getNumero().indexOf(filtro)>-1) {
                 retorno.add(c);

@@ -7,14 +7,17 @@ package iu;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import logica.Agenda;
 import logica.Contacto;
 import logica.UsuarioAgenda;
+import utilidades.Observable;
+import utilidades.Observador;
 
 /**
  *
  * @author saul
  */
-public class DialogoBusqueda extends javax.swing.JDialog {
+public class DialogoBusqueda extends javax.swing.JDialog implements Observador{
 
     private UsuarioAgenda usuario;
     ArrayList<Contacto> listaContactos;
@@ -25,6 +28,7 @@ public class DialogoBusqueda extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         usuario = u;
+        u.getAgenda().agregarObservador(this);
         setTitle("Busqueda en la agenda de "+usuario.getNombreCompleto());
     }
 
@@ -45,6 +49,11 @@ public class DialogoBusqueda extends javax.swing.JDialog {
         lblDetalles = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("Telefono");
 
@@ -107,6 +116,10 @@ public class DialogoBusqueda extends javax.swing.JDialog {
 
     }//GEN-LAST:event_listaResultadoValueChanged
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        usuario.getAgenda().quitarObservador(this);
+    }//GEN-LAST:event_formWindowClosing
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -139,11 +152,20 @@ public class DialogoBusqueda extends javax.swing.JDialog {
         
         String fecha = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(c.getFechaCreacion());
         
-        lblDetalles.setText("Detalles: "+c.getNombre()+" - "+c.getTipoContacto()+" - "+  c.getTelefono()+" - "+fecha);            
+        lblDetalles.setText("Detalles: "+c.getNombre()+" - "+c.getTipoContacto().getNombre()+" - "+  c.getTelefono().getNumero()+" - "+fecha);            
         
     }
 
     private String formatear(Contacto c) {
-       return c.getNombre()+" ("+c.getTelefono()+" ).";
+       return c.getNombre()+" ("+c.getTelefono().getNumero()+" ).";
     }
+    
+    @Override
+    public void actualizar(Observable origen, Object evento){
+
+        if(origen == usuario.getAgenda() && evento.equals(Agenda.Eventos.listaContactos)){
+            buscarContactos();
+        }
+    }
+    
 }

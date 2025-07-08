@@ -27,6 +27,7 @@ public class DialogoAgenda extends javax.swing.JDialog implements Observador{
 
     
     Logica fachada = Logica.getInstancia();
+    
     /**
      * Creates new form DialogoCrearContacto
      */
@@ -203,7 +204,7 @@ public class DialogoAgenda extends javax.swing.JDialog implements Observador{
     }//GEN-LAST:event_btnCrearContactoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        new DialogoBusqueda(this, true, usuario).setVisible(true);
+        new DialogoBusqueda(this, false, usuario).setVisible(true);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void tfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNombreActionPerformed
@@ -255,14 +256,6 @@ public class DialogoAgenda extends javax.swing.JDialog implements Observador{
         } catch (AgendaException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-
-        /*if (usuario.getAgenda().agregarContacto(tfNombre.getText(), tfTelefono.getText(), (TipoContacto)comboTipoContacto.getSelectedItem(), (TipoTelefono)comboTipoTelefono.getSelectedItem())) {
-            JOptionPane.showMessageDialog(this, "Contacto ingresado");
-            mostrarEstado();
-        }else{
-            JOptionPane.showMessageDialog(this, "Error");
-
-        }*/
         
     }
 
@@ -278,6 +271,8 @@ public class DialogoAgenda extends javax.swing.JDialog implements Observador{
     }
 
     private void logout() {
+         usuario.getAgenda().quitarObservador(this);
+         
          Logica.getInstancia().logout(acceso);
     }
 

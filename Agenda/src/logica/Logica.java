@@ -5,12 +5,13 @@
 package logica;
 
 import java.util.ArrayList;
+import utilidades.Observable;
 
 /**
  *
  * @author peraza
  */
-public class Logica {
+public class Logica extends Observable{
     
     private static Logica instancia = new Logica();
     private SistemaUsuarios su = new SistemaUsuarios();
@@ -22,6 +23,8 @@ public class Logica {
     public static Logica getInstancia() {
         return instancia;
     }
+    
+    public enum Eventos{listaLogueados;}
 
     public void agregar(UsuarioAgenda u) {
         su.agregar(u);
