@@ -4,8 +4,8 @@
  */
 package iu;
 
-import logica.Administrador;
-import logica.Logica;
+import modelo.Administrador;
+import modelo.Modelo;
 import utilidades.Observable;
 import utilidades.Observador;
 
@@ -23,7 +23,7 @@ public class DialogoConectados extends javax.swing.JDialog implements Observador
         initComponents();
         setTitle("Usuario: "+admin.getNombreCompleto());
         mostrarConectados();
-        Logica.getInstancia().agregarObservador(this);
+        Modelo.getInstancia().agregarObservador(this);
     }
 
     /**
@@ -69,7 +69,7 @@ public class DialogoConectados extends javax.swing.JDialog implements Observador
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        Logica.getInstancia().quitarObservador(this);
+        Modelo.getInstancia().quitarObservador(this);
     }//GEN-LAST:event_formWindowClosing
 
 
@@ -79,12 +79,12 @@ public class DialogoConectados extends javax.swing.JDialog implements Observador
     // End of variables declaration//GEN-END:variables
 
     private void mostrarConectados() {
-      listaConectados.setListData(Logica.getInstancia().getAccesos().toArray());
+      listaConectados.setListData(Modelo.getInstancia().getAccesos().toArray());
     }
     
     @Override
     
     public void actualizar(Observable origen, Object evento){
-        if(evento.equals(Logica.Eventos.listaLogueados)) mostrarConectados();
+        if(evento.equals(Modelo.Eventos.listaLogueados)) mostrarConectados();
     }
 }

@@ -7,9 +7,9 @@ package iu;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import logica.Agenda;
-import logica.Contacto;
-import logica.UsuarioAgenda;
+import modelo.Agenda;
+import modelo.Contacto;
+import modelo.UsuarioAgenda;
 import utilidades.Observable;
 import utilidades.Observador;
 

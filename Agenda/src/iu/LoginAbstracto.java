@@ -5,16 +5,17 @@
 package iu;
 
 
+import controlador.VistaLogin;
 import javax.swing.JOptionPane;
-import logica.Logica;
-import logica.Usuario;
-import logica.UsuarioAgenda;
+import modelo.Modelo;
+import modelo.Usuario;
+import modelo.UsuarioAgenda;
 
 /**
  *
  * @author peraza
  */
-public abstract class LoginAbstracto extends javax.swing.JDialog {
+public abstract class LoginAbstracto extends javax.swing.JDialog implements VistaLogin{
 
     /**
      * Creates new form DialogoLogin
@@ -130,7 +131,7 @@ public abstract class LoginAbstracto extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Login Inválido");
         }else{            
             dispose(); //Cierro el dialogoLogin
-            ejecutarProximoCasoUso(retorno); // Object, puede ser admin o acceso
+            proximoCasoUso(retorno); // Object, puede ser admin o acceso
             //new DialogoAgenda(this, true, usuario).setVisible(true);
             
         }
@@ -138,7 +139,7 @@ public abstract class LoginAbstracto extends javax.swing.JDialog {
 
     public abstract Object llamarALoginDeLaLogica(String nom, String pwd);
 
-    public abstract void ejecutarProximoCasoUso(Object retorno);
+    public abstract void proximoCasoUso(Object retorno);
 
 
 }

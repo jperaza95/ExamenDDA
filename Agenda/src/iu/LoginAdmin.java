@@ -5,10 +5,10 @@
 package iu;
 
 import java.awt.Frame;
-import logica.Administrador;
-import logica.Logica;
-import logica.Usuario;
-import logica.UsuarioAgenda;
+import modelo.Administrador;
+import modelo.Modelo;
+import modelo.Usuario;
+import modelo.UsuarioAgenda;
 
 /**
  *
@@ -23,18 +23,25 @@ public class LoginAdmin extends LoginAbstracto{
     
     @Override
     public Usuario llamarALoginDeLaLogica(String nom, String pwd) {
-        return Logica.getInstancia().loginAdmin(nom, pwd);
+        return Modelo.getInstancia().loginAdmin(nom, pwd);
 
     }
 
 
 
     @Override
-    public void ejecutarProximoCasoUso(Object obj) {
+    public void proximoCasoUso(Object obj) {
         
         new DialogoConectados((Frame)getParent(), false, (Administrador)obj).setVisible(true);
 
     }
+
+    @Override
+    public void mostrarError(String login_invalido) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+
 
     
 }

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package logica;
+package modelo;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class Agenda extends Observable{
         if(contactos.contains(nuevo)) throw new AgendaException("Ya existe el contacto");
         contactos.add(nuevo);
         avisar(Eventos.listaContactos);
-        Logica.getInstancia().avisar(Logica.Eventos.listaLogueados);
+        Modelo.getInstancia().avisar(Modelo.Eventos.listaLogueados);
 
     }
 

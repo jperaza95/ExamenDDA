@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package logica;
+package modelo;
 
 import java.util.ArrayList;
 
@@ -39,7 +39,7 @@ public class SistemaUsuarios {
         if (u!=null){
             a = new Acceso(u);
             accesos.add(a);
-            Logica.getInstancia().avisar(Logica.Eventos.listaLogueados);
+            Modelo.getInstancia().avisar(Modelo.Eventos.listaLogueados);
         }
         return a;
     }
@@ -64,6 +64,6 @@ public class SistemaUsuarios {
     
     public void logout(Acceso a){
         accesos.remove(a);
-        Logica.getInstancia().avisar(Logica.Eventos.listaLogueados);
+        Modelo.getInstancia().avisar(Modelo.Eventos.listaLogueados);
     }
 }

@@ -4,18 +4,16 @@
  */
 package controlador;
 
-import modelo.Contador;
+import java.util.ArrayList;
 
 /**
  *
  * @author peraza
  */
-public interface VistaContador {
+public interface VistaNumeros {
 
-    public void mostrarValor(int valor);
+    public void mostrarMensaje(String msg);
+    public void actualizarCantidadFaltan(int cantidad);
 
-    public void crearNuevaVista(Contador contador);
-
-    public void mostrarError(String message);
-    
+    public void mostrarResultado(ArrayList<Integer>listaResultado);
 }

@@ -2,27 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package logica;
+package modelo;
 
 /**
  *
  * @author peraza
  */
-public class UsuarioAgenda extends Usuario{
+public class Administrador extends Usuario{
 
-    private Agenda agenda = new Agenda(this);
-
-    public UsuarioAgenda(String nombre, String password, String nombreCompleto) {
+    public Administrador(String nombre, String password, String nombreCompleto) {
         super(nombre, password, nombreCompleto);
     }
-
-
-    public Agenda getAgenda() {
-        return agenda;
-    }
     
     
-        
-        
-
 }

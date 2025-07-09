@@ -23,31 +23,32 @@ public class LogicaNumeros extends Observable{
         return cantidad;
     }
 
-    private void setCantidad(int c) {
+    private void setCantidad (int c){
         this.cantidad = c;
         avisar(Eventos.cambioCantidad);
     }
     
     public enum Eventos{cambioCantidad,hayResultado}
     
-    public boolean iniciar(int cant){
-        if (cant>0) {
-            setCantidad(cant);
-            todos=new ArrayList();
-            pares = new ArrayList();
-            impares = new ArrayList(); 
-            return true;
-        }
-        return false;
+    public void iniciar(int cant) throws NumerosException{
+        if (cant<0) throw new NumerosException("La cantidad debe ser > 1");
+        setCantidad(cant);
+        todos=new ArrayList();
+        pares = new ArrayList();
+        impares = new ArrayList(); 
+
     }
+
+    
     
     public int faltan(){
         return cantidad;
     }
 
     
-    public boolean ingresar(int numero){
-        if(numero<0) return false;
+    public void ingresar(int numero) throws NumerosException{
+        
+        if(numero<0) throw new NumerosException("El número no puede ser negativo");
         if(numero==0) {
             setCantidad(0);
         } 
@@ -60,7 +61,7 @@ public class LogicaNumeros extends Observable{
         }
         
         if(hayResultado()) avisar(Eventos.hayResultado);
-        return true;
+
 
     }
 

@@ -6,6 +6,7 @@ package vistaEscritorio;
 
 import controlador.ControladorContador;
 import controlador.VistaContador;
+import javax.swing.JOptionPane;
 import modelo.Contador;
 import utilidades.Observable;
 import utilidades.Observador;
@@ -21,7 +22,6 @@ public class ContadorFrame extends javax.swing.JFrame implements VistaContador{
     public ContadorFrame(Contador c) {
         initComponents();
         controlador=new ControladorContador(c,this);
-        mostrarContador();
     }
 
     @SuppressWarnings("unchecked")
@@ -114,22 +114,22 @@ public class ContadorFrame extends javax.swing.JFrame implements VistaContador{
     }//GEN-LAST:event_displayActionPerformed
 
     private void masActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masActionPerformed
-        contador.sumar();
+        controlador.sumar();
 
     }//GEN-LAST:event_masActionPerformed
 
     private void menosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menosActionPerformed
-        contador.restar();
+        controlador.restar();
 
 
     }//GEN-LAST:event_menosActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        contador.quitarObservador(this);
+        controlador.salir();
     }//GEN-LAST:event_formWindowClosing
 
     private void nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoActionPerformed
-        new ContadorFrame(contador).setVisible(true);
+        controlador.crearNuevaUIParaEsteContador();        
     }//GEN-LAST:event_nuevoActionPerformed
 
     /**
@@ -144,23 +144,22 @@ public class ContadorFrame extends javax.swing.JFrame implements VistaContador{
     private javax.swing.JButton nuevo;
     // End of variables declaration//GEN-END:variables
 
-    private void mostrarContador() {
-        display.setText(contador.getValor()+"");
-    }
 
-    @Override
-    public void actualizar(Observable origen, Object evento) {
-        if(evento.equals(Contador.Eventos.cambioValor)) mostrarContador();
-                
-    }
+
 
     @Override
     public void mostrarValor(int valor) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        display.setText(valor+"");
+
     }
 
     @Override
     public void crearNuevaVista(Contador contador) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       new ContadorFrame(contador).setVisible(true);
+    }
+
+    @Override
+    public void mostrarError(String message) {
+        JOptionPane.showMessageDialog(this, message);
     }
 }

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package logica;
+package modelo;
 
 import java.util.ArrayList;
 import utilidades.Observable;
@@ -11,16 +11,16 @@ import utilidades.Observable;
  *
  * @author peraza
  */
-public class Logica extends Observable{
+public class Modelo extends Observable{
     
-    private static Logica instancia = new Logica();
+    private static Modelo instancia = new Modelo();
     private SistemaUsuarios su = new SistemaUsuarios();
     private SistemaAgendas sa = new SistemaAgendas();
     
-    private Logica(){
+    private Modelo(){
     }
 
-    public static Logica getInstancia() {
+    public static Modelo getInstancia() {
         return instancia;
     }
     

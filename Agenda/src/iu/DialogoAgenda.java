@@ -6,13 +6,13 @@ package iu;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import logica.Acceso;
-import logica.Agenda;
-import logica.AgendaException;
-import logica.Logica;
-import logica.TipoContacto;
-import logica.TipoTelefono;
-import logica.UsuarioAgenda;
+import modelo.Acceso;
+import modelo.Agenda;
+import modelo.AgendaException;
+import modelo.Modelo;
+import modelo.TipoContacto;
+import modelo.TipoTelefono;
+import modelo.UsuarioAgenda;
 import utilidades.Observable;
 import utilidades.Observador;
 
@@ -26,7 +26,7 @@ public class DialogoAgenda extends javax.swing.JDialog implements Observador{
     private UsuarioAgenda usuario;
 
     
-    Logica fachada = Logica.getInstancia();
+    Modelo fachada = Modelo.getInstancia();
     
     /**
      * Creates new form DialogoCrearContacto
@@ -273,7 +273,7 @@ public class DialogoAgenda extends javax.swing.JDialog implements Observador{
     private void logout() {
          usuario.getAgenda().quitarObservador(this);
          
-         Logica.getInstancia().logout(acceso);
+         Modelo.getInstancia().logout(acceso);
     }
 
     private void cargarTiposTelefono() {

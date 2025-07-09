@@ -2,31 +2,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package iuEscritorio;
+package vistaEscritorio;
 
+import controlador.ControladorNumeros;
+import controlador.VistaNumeros;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.LogicaNumeros;
-import utilidades.Observable;
-import utilidades.Observador;
+
 
 /**
  *
  * @author peraza
  */
-public class VentanaNumeros extends javax.swing.JFrame implements Observador{
+public class VentanaNumeros extends javax.swing.JFrame implements VistaNumeros{
 
     /**
      * Creates new form VentanaNumeros
      */
     
-    private LogicaNumeros logica;
+    private ControladorNumeros controlador;
+    
     
     public VentanaNumeros(LogicaNumeros ln) {
         initComponents();
         setLocationRelativeTo(null);
-        logica=ln;
         tfCantidad.requestFocus();
-        logica.agregarObservador(this);
+        controlador = new ControladorNumeros(this, ln);
+        
     }
     
 
@@ -135,14 +138,14 @@ public class VentanaNumeros extends javax.swing.JFrame implements Observador{
     }//GEN-LAST:event_tfNumeroActionPerformed
 
     private void bEstablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEstablecerActionPerformed
-establecer();    }//GEN-LAST:event_bEstablecerActionPerformed
+    establecer();    }//GEN-LAST:event_bEstablecerActionPerformed
 
     private void bIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bIngresarActionPerformed
-        ingresar();
+      ingresar();
     }//GEN-LAST:event_bIngresarActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        logica.quitarObservador(this);
+       controlador.salir();
     }//GEN-LAST:event_formWindowClosing
 
 
@@ -157,47 +160,45 @@ establecer();    }//GEN-LAST:event_bEstablecerActionPerformed
     private javax.swing.JTextField tfNumero;
     // End of variables declaration//GEN-END:variables
 
-    private void establecer(){
+    private void establecer(){        
         try {
             int c = Integer.parseInt(tfCantidad.getText());
-            logica.iniciar(c);
+            controlador.iniciar(c);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un número");
-            tfCantidad.requestFocus();
-            tfCantidad.selectAll();
-        }
+            mostrarMensaje("La cantidad debe ser un numero");
+         }
+
     }
     
     private void ingresar(){
         try {
-            int n = Integer.parseInt(tfNumero.getText());
-            logica.ingresar(n);
-            
+            int c = Integer.parseInt(tfNumero.getText());
+            controlador.agregarNumero(c);
+
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un número");
-        }
-        tfNumero.requestFocus();
-        tfNumero.selectAll();
-        //if(logica.hayResultado()) mostrar();
+            mostrarMensaje("Ingrese un número");
+         }
     }
     
-    private void mostrar() {
-        listNumeros.setListData(logica.getResultado().toArray());
+    
+    @Override
+    public void mostrarResultado(ArrayList<Integer> listaResultado) {
+        
+        listNumeros.setListData(listaResultado.toArray());
         tfCantidad.requestFocus();
         tfCantidad.selectAll();
     }
     
-    private void actualizarTitulo(){
+    @Override
+    public void actualizarCantidadFaltan(int cantidad){
         
-        setTitle("FALTAN "+logica.getCantidad()+"");
+        setTitle("FALTAN "+cantidad);
     
     }
+    
     
     @Override
-    public void actualizar(Observable origen, Object evento){
-        if(evento.equals(LogicaNumeros.Eventos.cambioCantidad)) actualizarTitulo();
-        if(evento.equals(LogicaNumeros.Eventos.hayResultado)) mostrar();
-
+    public void mostrarMensaje(String msg){
+        JOptionPane.showMessageDialog(this, msg);
     }
-    
 }

@@ -20,7 +20,8 @@ public class Contador extends Observable{
         valor+=1;
         avisar(Eventos.cambioValor);
     }
-    public void restar(){
+    public void restar() throws ContadorException{
+        if(valor==0) throw new ContadorException("El contador no puede ser negativo");
         valor-=1;
         avisar(Eventos.cambioValor);
     }

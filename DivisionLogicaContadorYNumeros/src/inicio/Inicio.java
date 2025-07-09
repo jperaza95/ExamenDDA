@@ -5,9 +5,10 @@
 package inicio;
 
 import vistaEscritorio.ContadorFrame;
-import iuEscritorio.VentanaNumeros;
+import vistaEscritorio.VentanaNumeros;
 import modelo.Contador;
 import modelo.LogicaNumeros;
+import vistaConsola.ContadorConsola;
 
 /**
  *
@@ -19,18 +20,19 @@ public class Inicio {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Contador logica = new Contador();
+        /*Contador logica = new Contador();
         new ContadorFrame(logica).setVisible(true);
         new ContadorFrame(logica).setVisible(true);
         new ContadorFrame(logica).setVisible(true);
+        new ContadorConsola(logica);*/
                 
         //InterfazUsuarioContadorA iu = new InterfazUsuarioContadorA(logica);
         //iu.iniciar();
         
-        /*LogicaNumeros logica = new LogicaNumeros();
+        LogicaNumeros logica = new LogicaNumeros();
         new VentanaNumeros(logica).setVisible(true);
         new VentanaNumeros(logica).setVisible(true);
-        new VentanaNumeros(logica).setVisible(true);*/
+        new VentanaNumeros(logica).setVisible(true);
         
     }
     
