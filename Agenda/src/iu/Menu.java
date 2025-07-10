@@ -4,6 +4,9 @@
  */
 package iu;
 
+import vistaEscritorio.LoginAdmin;
+import vistaEscritorio.LoginAgenda;
+
 /**
  *
  * @author peraza

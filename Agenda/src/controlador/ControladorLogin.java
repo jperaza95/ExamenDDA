@@ -21,6 +21,7 @@ public abstract class ControladorLogin {
         Object dato = llamarLoginLogica(usr,pwd);
        if(dato!=null){
            vista.proximoCasoUso(dato);
+           vista.cerrar();
        }else vista.mostrarError("Login invalido");
     }
 

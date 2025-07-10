@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package iu;
+package vistaEscritorio;
 
 
+import controlador.ControladorLogin;
 import controlador.VistaLogin;
 import javax.swing.JOptionPane;
 import modelo.Modelo;
@@ -17,9 +18,8 @@ import modelo.UsuarioAgenda;
  */
 public abstract class LoginAbstracto extends javax.swing.JDialog implements VistaLogin{
 
-    /**
-     * Creates new form DialogoLogin
-     */
+    private ControladorLogin controlador;       
+    
     public LoginAbstracto(java.awt.Frame parent, boolean modal, String tipoUsuario) {
         super(parent, modal);
         initComponents();
@@ -101,6 +101,11 @@ public abstract class LoginAbstracto extends javax.swing.JDialog implements Vist
         setBounds(0, 0, 416, 308);
     }// </editor-fold>//GEN-END:initComponents
 
+
+    public void setControlador(ControladorLogin controlador) {
+        this.controlador = controlador;
+    }
+    
     private void tfPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPasswordActionPerformed
         login();
     }//GEN-LAST:event_tfPasswordActionPerformed
@@ -123,21 +128,18 @@ public abstract class LoginAbstracto extends javax.swing.JDialog implements Vist
         String nombre = tfUsuario.getText();
         String pass = new String(tfPassword.getPassword());
         
-        //UsuarioAgenda usuario = Logica.getInstancia().loginAgenda(pass, pass);
+        controlador.login(nombre, pass);
         
-        Object retorno = llamarALoginDeLaLogica(nombre, pass);
-        
-        if (retorno==null) {
-            JOptionPane.showMessageDialog(this, "Login Inválido");
-        }else{            
-            dispose(); //Cierro el dialogoLogin
-            proximoCasoUso(retorno); // Object, puede ser admin o acceso
-            //new DialogoAgenda(this, true, usuario).setVisible(true);
-            
-        }
     }
-
-    public abstract Object llamarALoginDeLaLogica(String nom, String pwd);
+    
+    public void mostrarError(String msg) {
+        JOptionPane.showMessageDialog(this, msg);
+    }
+    
+    @Override
+    public void cerrar() {
+        dispose();
+    }
 
     public abstract void proximoCasoUso(Object retorno);
 

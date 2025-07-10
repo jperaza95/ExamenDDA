@@ -12,6 +12,8 @@ public interface VistaLogin {
 
     public void proximoCasoUso(Object dato);
 
-    public void mostrarError(String login_invalido);
+    public void mostrarError(String msg);
+
+    public void cerrar();
     
 }

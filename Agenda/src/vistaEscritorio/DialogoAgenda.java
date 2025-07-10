@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package iu;
+package vistaEscritorio;
 
+import controlador.ControladorDialogoAgenda;
+import controlador.VistaDialogoAgenda;
+import iu.DialogoBusqueda;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Acceso;
@@ -13,21 +16,18 @@ import modelo.Modelo;
 import modelo.TipoContacto;
 import modelo.TipoTelefono;
 import modelo.UsuarioAgenda;
-import utilidades.Observable;
-import utilidades.Observador;
+
+
 
 
 /**
  *
  * @author peraza
  */
-public class DialogoAgenda extends javax.swing.JDialog implements Observador{
-    private Acceso acceso;
-    private UsuarioAgenda usuario;
+public class DialogoAgenda extends javax.swing.JDialog implements VistaDialogoAgenda{
+    private ControladorDialogoAgenda controlador;
 
-    
-    Modelo fachada = Modelo.getInstancia();
-    
+
     /**
      * Creates new form DialogoCrearContacto
      */
@@ -35,12 +35,7 @@ public class DialogoAgenda extends javax.swing.JDialog implements Observador{
     public DialogoAgenda(java.awt.Frame parent, boolean modal, Acceso a) {
         super(parent, modal);
         initComponents();
-        acceso = a;
-        usuario = a.getUsuario();
-        cargarTiposContacto();
-        cargarTiposTelefono();
-        mostrarEstado();
-        usuario.getAgenda().agregarObservador(this);
+        controlador = new ControladorDialogoAgenda(this,a);
     }
 
     /**
@@ -151,7 +146,7 @@ public class DialogoAgenda extends javax.swing.JDialog implements Observador{
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(tfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(tfNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel1)
@@ -204,7 +199,7 @@ public class DialogoAgenda extends javax.swing.JDialog implements Observador{
     }//GEN-LAST:event_btnCrearContactoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        new DialogoBusqueda(this, false, usuario).setVisible(true);
+        controlador.nuevoDialogo();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void tfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNombreActionPerformed
@@ -238,55 +233,64 @@ public class DialogoAgenda extends javax.swing.JDialog implements Observador{
     private javax.swing.JTextField tfTelefono;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarTiposContacto() {
 
-        ArrayList<TipoContacto> tiposContacto = fachada.getTiposContacto();
-        
-        for(TipoContacto tc : tiposContacto){
-            comboTipoContacto.addItem(tc);
-        }
-    }
 
     private void crearContacto() {
+        String nom = tfNombre.getText();
+        String tel = tfTelefono.getText();
+        TipoContacto tc = (TipoContacto)comboTipoContacto.getSelectedItem();
+        TipoTelefono tf = (TipoTelefono)comboTipoTelefono.getSelectedItem();
         
-        try {
-            usuario.getAgenda().agregarContacto(tfNombre.getText(), tfTelefono.getText(), (TipoContacto)comboTipoContacto.getSelectedItem(), (TipoTelefono)comboTipoTelefono.getSelectedItem());
-            JOptionPane.showMessageDialog(this, "Contacto ingresado");
-
-        } catch (AgendaException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
-        
+        controlador.crearContacto(nom,tel,tc,tf); 
     }
 
-    private void mostrarEstado() {
 
-        setearTitulo();
-        listContactos.setListData(usuario.getAgenda().getContactos().toArray());
-    }
 
-    private void setearTitulo() {
-       setTitle(usuario.getNombreCompleto().toUpperCase()+" - Contactos: "+usuario.getAgenda().cantidadContactos());
+    private void setearTitulo(UsuarioAgenda u) {
+       setTitle(u.getNombreCompleto().toUpperCase()+" - Contactos: "+u.getAgenda().cantidadContactos());
 
     }
 
     private void logout() {
-         usuario.getAgenda().quitarObservador(this);
-         
-         Modelo.getInstancia().logout(acceso);
+        controlador.logout();
+
     }
 
-    private void cargarTiposTelefono() {
-        ArrayList<TipoTelefono> tiposTelefono = fachada.getTiposTelefono();
-        
+    @Override
+    
+    public void mostrarTiposContacto(ArrayList<TipoContacto> tiposContacto) {
+
+        for(TipoContacto tc : tiposContacto){
+            comboTipoContacto.addItem(tc);
+        }
+    }
+    
+    @Override
+    public void mostrarTiposTelefono(ArrayList<TipoTelefono> tiposTelefono) {
+
         for(TipoTelefono tt : tiposTelefono){
             comboTipoTelefono.addItem(tt);
         }
     }
     
-    public void actualizar(Observable origen, Object evento){
-        if (evento.equals(Agenda.Eventos.listaContactos)) {
-            mostrarEstado();
-        }
+    @Override
+    
+    public void mostrarEstado(UsuarioAgenda u) {
+
+        setearTitulo(u);
+        listContactos.setListData(u.getAgenda().getContactos().toArray());
+    }    
+    
+    @Override
+    
+    public void mostrarMensaje(String msg){
+            JOptionPane.showMessageDialog(this, msg);
+    
+    }
+    
+    @Override
+    
+    public void nuevoDialogo(UsuarioAgenda u){
+        new DialogoBusqueda(this, false, u).setVisible(true);
     }
 }

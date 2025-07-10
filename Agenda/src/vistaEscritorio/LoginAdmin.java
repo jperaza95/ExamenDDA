@@ -2,9 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package iu;
+package vistaEscritorio;
 
+import controlador.ControladorLoginAdmin;
+import iu.DialogoConectados;
 import java.awt.Frame;
+import javax.swing.JOptionPane;
 import modelo.Administrador;
 import modelo.Modelo;
 import modelo.Usuario;
@@ -16,18 +19,12 @@ import modelo.UsuarioAgenda;
  */
 public class LoginAdmin extends LoginAbstracto{
 
+
     public LoginAdmin(Frame parent, boolean modal) {
         super(parent, modal, "Administrador");
+        setControlador(new ControladorLoginAdmin(this));
     }
     
-    
-    @Override
-    public Usuario llamarALoginDeLaLogica(String nom, String pwd) {
-        return Modelo.getInstancia().loginAdmin(nom, pwd);
-
-    }
-
-
 
     @Override
     public void proximoCasoUso(Object obj) {
@@ -36,10 +33,7 @@ public class LoginAdmin extends LoginAbstracto{
 
     }
 
-    @Override
-    public void mostrarError(String login_invalido) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+
 
 
 
