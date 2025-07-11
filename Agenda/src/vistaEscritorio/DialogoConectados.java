@@ -2,28 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package iu;
+package vistaEscritorio;
 
+import controlador.ControladorConectados;
+import controlador.VistaConectados;
+import java.util.ArrayList;
+import modelo.Acceso;
 import modelo.Administrador;
-import modelo.Modelo;
-import utilidades.Observable;
-import utilidades.Observador;
+
 
 /**
  *
  * @author peraza
  */
-public class DialogoConectados extends javax.swing.JDialog implements Observador{
+public class DialogoConectados extends javax.swing.JDialog implements VistaConectados{
 
-    /**
-     * Creates new form DialogoConectados
-     */
+    private ControladorConectados controlador;
+        
     public DialogoConectados(java.awt.Frame parent, boolean modal, Administrador admin) {
         super(parent, modal);
         initComponents();
-        setTitle("Usuario: "+admin.getNombreCompleto());
-        mostrarConectados();
-        Modelo.getInstancia().agregarObservador(this);
+        controlador=new ControladorConectados(this,admin);
+
     }
 
     /**
@@ -37,6 +37,7 @@ public class DialogoConectados extends javax.swing.JDialog implements Observador
 
         jScrollPane1 = new javax.swing.JScrollPane();
         listaConectados = new javax.swing.JList();
+        bTipoContacto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -47,19 +48,30 @@ public class DialogoConectados extends javax.swing.JDialog implements Observador
 
         jScrollPane1.setViewportView(listaConectados);
 
+        bTipoContacto.setText("Crear Tipo Contacto");
+        bTipoContacto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bTipoContactoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(78, 78, 78)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(bTipoContacto)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(106, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addContainerGap()
+                .addComponent(bTipoContacto)
+                .addGap(33, 33, 33)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(70, Short.MAX_VALUE))
         );
@@ -69,22 +81,36 @@ public class DialogoConectados extends javax.swing.JDialog implements Observador
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        Modelo.getInstancia().quitarObservador(this);
+        controlador.cerrar();
+
     }//GEN-LAST:event_formWindowClosing
+
+    private void bTipoContactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTipoContactoActionPerformed
+        controlador.CUCrearTipoContacto();
+    }//GEN-LAST:event_bTipoContactoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bTipoContacto;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList listaConectados;
     // End of variables declaration//GEN-END:variables
 
-    private void mostrarConectados() {
-      listaConectados.setListData(Modelo.getInstancia().getAccesos().toArray());
+    @Override    
+    public void mostrarConectados(ArrayList<Acceso> conectados) {
+      listaConectados.setListData(conectados.toArray());
     }
     
     @Override
     
-    public void actualizar(Observable origen, Object evento){
-        if(evento.equals(Modelo.Eventos.listaLogueados)) mostrarConectados();
+    public void mostrarAdmin(String nombre){
+      setTitle("USUARIO: "+nombre.toUpperCase());
+
     }
+    
+   @Override
+   
+   public void ejecutarCUCrearTipoContacto(){
+       new DialogoCrearTipoContacto(this, false).setVisible(true);
+   }
 }

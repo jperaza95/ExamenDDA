@@ -16,11 +16,13 @@ public class SistemaAgendas {
     protected SistemaAgendas(){};
     
     public void agregar(TipoContacto tc){
+        
         tiposContacto.add(tc);
     }
     
     public void agregar(TipoTelefono tt){
-    tiposTelefono.add(tt);
+        
+        tiposTelefono.add(tt);
     }
     
     public TipoContacto obtenerTipoContacto(String nombre){
@@ -39,6 +41,12 @@ public class SistemaAgendas {
         return tiposTelefono;
     }
     
-    
+    public void crearTipoContacto (String nombre) throws AgendaException{
+        if(nombre.isEmpty()) throw new AgendaException("El nombre no puede estar vacío.");
+        if(obtenerTipoContacto(nombre)!=null)  throw new AgendaException("El Tipo de contacto ya existe.");
+        agregar(new TipoContacto(nombre));
+        Modelo.getInstancia().avisar(tiposContacto);
+        
+    }
     
 }

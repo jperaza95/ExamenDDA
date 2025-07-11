@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import modelo.Acceso;
 import modelo.Agenda;
 import modelo.AgendaException;
+import modelo.Contacto;
 import modelo.Modelo;
 import modelo.TipoContacto;
 import modelo.TipoTelefono;
@@ -19,14 +20,14 @@ import utilidades.Observador;
  *
  * @author peraza
  */
-public class ControladorDialogoAgenda implements Observador{
+public class ControladorAgenda implements Observador{
      
-    private VistaDialogoAgenda vista;
+    private VistaAgenda vista;
     private Acceso acceso;
     private UsuarioAgenda usuario;
     
 
-    public ControladorDialogoAgenda(VistaDialogoAgenda v, Acceso a) {
+    public ControladorAgenda(VistaAgenda v, Acceso a) {
         vista = v;
         acceso = a;
         usuario = a.getUsuario();
@@ -34,7 +35,7 @@ public class ControladorDialogoAgenda implements Observador{
         cargarTiposTelefono();
         vista.mostrarEstado(usuario);
         usuario.getAgenda().agregarObservador(this);
-        
+        Modelo.getInstancia().agregarObservador(this);
     }
 
     private void cargarTiposContacto() {
@@ -59,6 +60,9 @@ public class ControladorDialogoAgenda implements Observador{
         if (evento.equals(Agenda.Eventos.listaContactos)) {
             vista.mostrarEstado(usuario);
         }
+        if(evento.equals(Modelo.Eventos.tiposContacto)){
+            cargarTiposContacto();
+        }
     }    
 
     public void crearContacto(String nom, String tel, TipoContacto tc, TipoTelefono tf) {
@@ -75,7 +79,17 @@ public class ControladorDialogoAgenda implements Observador{
     }
 
     public void nuevoDialogo() {
-        vista.nuevoDialogo(usuario);
+        vista.buscar();
+    }
+    
+    public void buscar(String filtro){
+        vista.mostrarResultadoBusqueda(usuario.getAgenda().buscarContactos(filtro));
+    }
+    
+    public void detalles(Contacto c){
+        if(c!=null){
+        vista.mostrarDetalles(c.getFechaCreacion(),c.getNombre(),c.getTipoContacto(),c.getTelefono());
+        }
     }
 
 

@@ -5,7 +5,6 @@
 package vistaEscritorio;
 
 import controlador.ControladorLoginAdmin;
-import iu.DialogoConectados;
 import java.awt.Frame;
 import javax.swing.JOptionPane;
 import modelo.Administrador;

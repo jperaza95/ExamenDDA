@@ -2,13 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package iu;
+package vistaEscritorio;
 
+import controlador.ControladorAgenda;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import modelo.Agenda;
 import modelo.Contacto;
+import modelo.Telefono;
+import modelo.TipoContacto;
 import modelo.UsuarioAgenda;
 import utilidades.Observable;
 import utilidades.Observador;
@@ -17,20 +21,24 @@ import utilidades.Observador;
  *
  * @author saul
  */
-public class DialogoBusqueda extends javax.swing.JDialog implements Observador{
+public class DialogoBusqueda extends javax.swing.JDialog {
 
-    private UsuarioAgenda usuario;
+    private ControladorAgenda controlador;
     ArrayList<Contacto> listaContactos;
     /**
      * Creates new form DialogoBusqueda
      */
-    public DialogoBusqueda(java.awt.Dialog parent, boolean modal, UsuarioAgenda u) {
+    public DialogoBusqueda(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        usuario = u;
-        u.getAgenda().agregarObservador(this);
-        setTitle("Busqueda en la agenda de "+usuario.getNombreCompleto());
+        this.controlador = controlador;
     }
+
+    public void setControlador(ControladorAgenda controlador) {
+        this.controlador = controlador;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,7 +115,7 @@ public class DialogoBusqueda extends javax.swing.JDialog implements Observador{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        buscarContactos();
+        buscar();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void listaResultadoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaResultadoValueChanged
@@ -117,7 +125,7 @@ public class DialogoBusqueda extends javax.swing.JDialog implements Observador{
     }//GEN-LAST:event_listaResultadoValueChanged
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        usuario.getAgenda().quitarObservador(this);
+        
     }//GEN-LAST:event_formWindowClosing
 
 
@@ -131,13 +139,11 @@ public class DialogoBusqueda extends javax.swing.JDialog implements Observador{
     private javax.swing.JTextField tfTelefono;
     // End of variables declaration//GEN-END:variables
 
-    private void buscarContactos() {
-        listaContactos = usuario.getAgenda().buscarContactos(tfTelefono.getText());
-        ArrayList<String> listado = new ArrayList(); 
-        for (Contacto c : listaContactos) {
-            listado.add(formatear(c));
-        }
-            listaResultado.setListData(listado.toArray());
+    public void buscar() {
+        if(controlador!=null) controlador.buscar(tfTelefono.getText());
+
+
+
         
     }
 
@@ -150,9 +156,8 @@ public class DialogoBusqueda extends javax.swing.JDialog implements Observador{
         
         Contacto c = listaContactos.get(pos);
         
-        String fecha = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(c.getFechaCreacion());
-        
-        lblDetalles.setText("Detalles: "+c.getNombre()+" - "+c.getTipoContacto().getNombre()+" - "+  c.getTelefono().getNumero()+" - "+fecha);            
+        controlador.detalles(c);
+          
         
     }
 
@@ -160,12 +165,21 @@ public class DialogoBusqueda extends javax.swing.JDialog implements Observador{
        return c.getNombre()+" ("+c.getTelefono().getNumero()+" ).";
     }
     
-    @Override
-    public void actualizar(Observable origen, Object evento){
 
-        if(origen == usuario.getAgenda() && evento.equals(Agenda.Eventos.listaContactos)){
-            buscarContactos();
+    public void mostrarResultadoBusqueda(ArrayList<Contacto> lista) {
+        this.listaContactos=lista;
+        ArrayList<String> listado = new ArrayList(); 
+        for (Contacto c : listaContactos) {
+            listado.add(formatear(c));
         }
+            listaResultado.setListData(listado.toArray());
+    }
+
+    public void mostrarDetalles(Date fechaCreacion, String nombre, TipoContacto tipoContacto, Telefono telefono) {
+        String fecha = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(fechaCreacion);
+        lblDetalles.setText("Detalles: "+nombre+" - "+tipoContacto.getNombre()+" - "+  telefono.getNumero()+" - "+fecha);            
+
+
     }
     
 }

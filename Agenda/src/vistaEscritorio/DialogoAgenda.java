@@ -4,18 +4,20 @@
  */
 package vistaEscritorio;
 
-import controlador.ControladorDialogoAgenda;
-import controlador.VistaDialogoAgenda;
-import iu.DialogoBusqueda;
+import controlador.ControladorAgenda;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import modelo.Acceso;
 import modelo.Agenda;
 import modelo.AgendaException;
+import modelo.Contacto;
 import modelo.Modelo;
+import modelo.Telefono;
 import modelo.TipoContacto;
 import modelo.TipoTelefono;
 import modelo.UsuarioAgenda;
+import controlador.VistaAgenda;
 
 
 
@@ -24,9 +26,9 @@ import modelo.UsuarioAgenda;
  *
  * @author peraza
  */
-public class DialogoAgenda extends javax.swing.JDialog implements VistaDialogoAgenda{
-    private ControladorDialogoAgenda controlador;
-
+public class DialogoAgenda extends javax.swing.JDialog implements VistaAgenda{
+    private ControladorAgenda controlador;
+    private DialogoBusqueda dialogoB;
 
     /**
      * Creates new form DialogoCrearContacto
@@ -35,7 +37,9 @@ public class DialogoAgenda extends javax.swing.JDialog implements VistaDialogoAg
     public DialogoAgenda(java.awt.Frame parent, boolean modal, Acceso a) {
         super(parent, modal);
         initComponents();
-        controlador = new ControladorDialogoAgenda(this,a);
+        dialogoB = new DialogoBusqueda(parent, false);
+        controlador = new ControladorAgenda(this,a);
+        dialogoB.setControlador(controlador);
     }
 
     /**
@@ -246,15 +250,18 @@ public class DialogoAgenda extends javax.swing.JDialog implements VistaDialogoAg
 
 
 
-    private void setearTitulo(UsuarioAgenda u) {
-       setTitle(u.getNombreCompleto().toUpperCase()+" - Contactos: "+u.getAgenda().cantidadContactos());
 
-    }
 
     private void logout() {
         controlador.logout();
 
     }
+    
+    @Override
+    public void buscar(){
+        dialogoB.setVisible(true);
+    }
+    
 
     @Override
     
@@ -273,12 +280,20 @@ public class DialogoAgenda extends javax.swing.JDialog implements VistaDialogoAg
         }
     }
     
+    private void setearTitulo(UsuarioAgenda u) {
+        setTitle(u.getNombreCompleto().toUpperCase()+" - Contactos: "+u.getAgenda().cantidadContactos());
+
+    }
+    
     @Override
     
     public void mostrarEstado(UsuarioAgenda u) {
 
         setearTitulo(u);
         listContactos.setListData(u.getAgenda().getContactos().toArray());
+        dialogoB.setTitle("Busqueda en la agenda de "+u.getNombreCompleto());
+
+        dialogoB.buscar();
     }    
     
     @Override
@@ -288,9 +303,19 @@ public class DialogoAgenda extends javax.swing.JDialog implements VistaDialogoAg
     
     }
     
+
+
     @Override
-    
-    public void nuevoDialogo(UsuarioAgenda u){
-        new DialogoBusqueda(this, false, u).setVisible(true);
+    public void mostrarResultadoBusqueda(ArrayList<Contacto> lista) {
+        dialogoB.mostrarResultadoBusqueda(lista);
     }
+
+    @Override
+    public void mostrarDetalles(Date fechaCreacion, String nombre, TipoContacto tipoContacto, Telefono telefono) {
+       dialogoB.mostrarDetalles(fechaCreacion,nombre,tipoContacto,telefono);
+    }
+
+
+
+
 }
