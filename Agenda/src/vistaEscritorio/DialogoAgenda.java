@@ -266,7 +266,7 @@ public class DialogoAgenda extends javax.swing.JDialog implements VistaAgenda{
     @Override
     
     public void mostrarTiposContacto(ArrayList<TipoContacto> tiposContacto) {
-
+        comboTipoContacto.removeAllItems();
         for(TipoContacto tc : tiposContacto){
             comboTipoContacto.addItem(tc);
         }

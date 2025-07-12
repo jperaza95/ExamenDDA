@@ -4,6 +4,9 @@
  */
 package controlador;
 
+import java.util.ArrayList;
+import modelo.TipoContacto;
+
 /**
  *
  * @author peraza
@@ -15,5 +18,7 @@ public interface VistaTipoContacto {
     public void mostrarMensaje(String msg);
 
     public void limpiarCampos();
+
+    public void mostrarTiposContacto(ArrayList<TipoContacto> tiposContacto);
     
 }

@@ -6,7 +6,9 @@ package vistaEscritorio;
 
 import controlador.ControladorTipoContacto;
 import controlador.VistaTipoContacto;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import modelo.TipoContacto;
 
 /**
  *
@@ -34,6 +36,9 @@ public class DialogoCrearTipoContacto extends javax.swing.JDialog implements Vis
         jLabel1 = new javax.swing.JLabel();
         tfTipoContacto = new javax.swing.JTextField();
         btnCrear = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaTiposContacto = new javax.swing.JList();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -46,34 +51,48 @@ public class DialogoCrearTipoContacto extends javax.swing.JDialog implements Vis
             }
         });
 
+        jScrollPane1.setViewportView(listaTiposContacto);
+
+        jLabel2.setText("Tipos de Contacto");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(tfTipoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(263, 263, 263)
+                        .addComponent(btnCrear))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel1)
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1)
+                            .addComponent(tfTipoContacto))))
+                .addGap(49, 49, 49))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCrear)
-                .addGap(77, 77, 77))
+                .addComponent(jLabel2)
+                .addGap(115, 115, 115))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(96, 96, 96)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(tfTipoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41)
                 .addComponent(btnCrear)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
 
-        pack();
+        setBounds(0, 0, 444, 502);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
@@ -87,6 +106,9 @@ public class DialogoCrearTipoContacto extends javax.swing.JDialog implements Vis
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrear;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList listaTiposContacto;
     private javax.swing.JTextField tfTipoContacto;
     // End of variables declaration//GEN-END:variables
 
@@ -102,5 +124,11 @@ public class DialogoCrearTipoContacto extends javax.swing.JDialog implements Vis
     @Override
     public void limpiarCampos(){
         tfTipoContacto.setText("");
+    }
+    
+    @Override
+    
+    public void mostrarTiposContacto(ArrayList<TipoContacto> tipos){
+        listaTiposContacto.setListData(tipos.toArray());
     }
 }

@@ -42,10 +42,11 @@ public class SistemaAgendas {
     }
     
     public void crearTipoContacto (String nombre) throws AgendaException{
-        if(nombre.isEmpty()) throw new AgendaException("El nombre no puede estar vacío.");
-        if(obtenerTipoContacto(nombre)!=null)  throw new AgendaException("El Tipo de contacto ya existe.");
-        agregar(new TipoContacto(nombre));
-        Modelo.getInstancia().avisar(tiposContacto);
+        String nombreUp = nombre.toUpperCase();
+        if(nombreUp.isEmpty()) throw new AgendaException("El nombre no puede estar vacío.");
+        if(obtenerTipoContacto(nombreUp)!=null)  throw new AgendaException("El Tipo de contacto ya existe.");
+        agregar(new TipoContacto(nombreUp));
+        Modelo.getInstancia().avisar(Modelo.Eventos.tiposContacto);
         
     }
     

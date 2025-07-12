@@ -30,8 +30,7 @@ public class CargaDatos {
         logica.agregar(new Administrador("y","y","Yildiz"));
         
 
-        
-        
+
         logica.agregar(new TipoContacto("Particular"));
         logica.agregar(new TipoContacto("Laboral"));
         logica.agregar(new TipoContacto("Familiar"));

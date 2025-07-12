@@ -4,18 +4,24 @@
  */
 package controlador;
 
+import java.util.ArrayList;
 import modelo.AgendaException;
 import modelo.Modelo;
+import modelo.TipoContacto;
+import utilidades.Observable;
+import utilidades.Observador;
 
 /**
  *
  * @author peraza
  */
-public class ControladorTipoContacto {
+public class ControladorTipoContacto implements Observador{
     private VistaTipoContacto vista;
     
     public ControladorTipoContacto(VistaTipoContacto v){
         this.vista = v;
+        cargarTiposContacto();
+        Modelo.getInstancia().agregarObservador(this);
     }
 
     public void crear(String nombre) {
@@ -27,5 +33,18 @@ public class ControladorTipoContacto {
             vista.mostrarError(e.getMessage());
         }
     }
+    
+    public void cargarTiposContacto(){
+        ArrayList<TipoContacto> tiposContacto = Modelo.getInstancia().getTiposContacto();
+        vista.mostrarTiposContacto(tiposContacto);
+    }
+    
+    @Override
+    
+    public void actualizar(Observable origen, Object evento){
+        if(evento.equals(Modelo.Eventos.tiposContacto))cargarTiposContacto();
+    }
+    
+    
     
 }

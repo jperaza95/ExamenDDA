@@ -39,6 +39,7 @@ public class ControladorAgenda implements Observador{
     }
 
     private void cargarTiposContacto() {
+        
         ArrayList<TipoContacto> tiposContacto = Modelo.getInstancia().getTiposContacto();
         vista.mostrarTiposContacto(tiposContacto);
 
