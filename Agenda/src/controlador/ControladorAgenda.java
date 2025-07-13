@@ -61,7 +61,7 @@ public class ControladorAgenda implements Observador{
         if (evento.equals(Agenda.Eventos.listaContactos)) {
             vista.mostrarEstado(usuario);
         }
-        if(evento.equals(Modelo.Eventos.tiposContacto)){
+        if(evento.equals(Modelo.Eventos.listaTiposContacto)){
             cargarTiposContacto();
         }
     }    

@@ -24,9 +24,9 @@ public class ControladorTipoContacto implements Observador{
         Modelo.getInstancia().agregarObservador(this);
     }
 
-    public void crear(String nombre) {
+    public void agregarTipoContacto(String nombre) {
         try {
-            Modelo.getInstancia().crearTipoContacto(nombre);
+            Modelo.getInstancia().agregar(new TipoContacto(nombre));
             vista.mostrarMensaje("Tipo de contacto creado correctamente");
             vista.limpiarCampos();
         } catch (AgendaException e) {
@@ -42,7 +42,7 @@ public class ControladorTipoContacto implements Observador{
     @Override
     
     public void actualizar(Observable origen, Object evento){
-        if(evento.equals(Modelo.Eventos.tiposContacto))cargarTiposContacto();
+        if(evento.equals(Modelo.Eventos.listaTiposContacto))cargarTiposContacto();
     }
     
     

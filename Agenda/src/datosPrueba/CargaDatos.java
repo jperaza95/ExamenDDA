@@ -4,7 +4,10 @@
  */
 package datosPrueba;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Administrador;
+import modelo.AgendaException;
 import modelo.Modelo;
 import modelo.TipoContacto;
 import modelo.TipoTelefono;
@@ -15,31 +18,30 @@ import modelo.UsuarioAgenda;
  * @author peraza
  */
 public class CargaDatos {
-    
-    
-    
-    public static void ejecutar(){
-        
-        Modelo logica = Modelo.getInstancia();
-        logica.agregar(new UsuarioAgenda("a","a","Ana"));
-        logica.agregar(new UsuarioAgenda("b","b","Beatriz"));
-        logica.agregar(new UsuarioAgenda("c","c","Carlos"));
-        
-        logica.agregar(new Administrador("z","z","Zulma"));
-        logica.agregar(new Administrador("x","x","Xavier"));
-        logica.agregar(new Administrador("y","y","Yildiz"));
-        
 
+    public static void ejecutar() {
 
-        logica.agregar(new TipoContacto("Particular"));
-        logica.agregar(new TipoContacto("Laboral"));
-        logica.agregar(new TipoContacto("Familiar"));
-        
-        logica.agregar(new TipoTelefono("Fijo"));
-        logica.agregar(new TipoTelefono("Celular"));
-        logica.agregar(new TipoTelefono("Internacional"));
-        
-       
-        
+        try {
+            Modelo logica = Modelo.getInstancia();
+            logica.agregar(new UsuarioAgenda("a", "a", "Ana"));
+            logica.agregar(new UsuarioAgenda("b", "b", "Beatriz"));
+            logica.agregar(new UsuarioAgenda("c", "c", "Carlos"));
+
+            logica.agregar(new Administrador("z", "z", "Zulma"));
+            logica.agregar(new Administrador("x", "x", "Xavier"));
+            logica.agregar(new Administrador("y", "y", "Yildiz"));
+
+            logica.agregar(new TipoContacto("PARTICULAR"));
+            logica.agregar(new TipoContacto("LABORAL"));
+            logica.agregar(new TipoContacto("FAMILIAR"));
+
+            logica.agregar(new TipoTelefono("Fijo"));
+            logica.agregar(new TipoTelefono("Celular"));
+            logica.agregar(new TipoTelefono("Internacional"));
+
+        } catch (AgendaException ex) {
+            ex.printStackTrace();
+        }
+
     }
 }

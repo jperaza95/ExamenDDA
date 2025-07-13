@@ -24,7 +24,7 @@ public class Modelo extends Observable{
         return instancia;
     }
     
-    public enum Eventos{listaLogueados, tiposContacto;}
+    public enum Eventos{listaLogueados, listaTiposContacto;}
 
     public void agregar(UsuarioAgenda u) {
         su.agregar(u);
@@ -34,7 +34,7 @@ public class Modelo extends Observable{
         return su.loginAgenda(usr, pwd);
     }
 
-    public void agregar(TipoContacto tc) {
+    public void agregar(TipoContacto tc) throws AgendaException{
         sa.agregar(tc);
     }
 
@@ -69,10 +69,9 @@ public class Modelo extends Observable{
     public ArrayList<TipoTelefono> getTiposTelefono() {
         return sa.getTiposTelefono();
     }
+    
 
-    public void crearTipoContacto(String nombre) throws AgendaException {
-        sa.crearTipoContacto(nombre);
-    }
+
     
     
     

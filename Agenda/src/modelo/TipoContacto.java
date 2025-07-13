@@ -11,8 +11,8 @@ package modelo;
 public class TipoContacto {
     String nombre;
 
-    public TipoContacto(String nombre) {
-        this.nombre = nombre;
+    public TipoContacto(String nom) {
+        setNombre(nom);
     }
     
     
@@ -22,12 +22,23 @@ public class TipoContacto {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+ 
+        this.nombre = nombre.toUpperCase();
     }
 
     @Override
     public String toString() {
         return nombre;
+    }
+    
+    @Override
+    public boolean equals(Object o){
+        return nombre.equals(((TipoContacto)o).getNombre());
+    }
+
+    public void Validar() throws AgendaException {
+        if(nombre.trim().isEmpty()|| nombre == null) throw new AgendaException("El nombre no puede estar vacío.");
+  
     }
     
     

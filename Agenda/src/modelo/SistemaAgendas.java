@@ -15,9 +15,12 @@ public class SistemaAgendas {
     private ArrayList<TipoTelefono> tiposTelefono = new ArrayList();
     protected SistemaAgendas(){};
     
-    public void agregar(TipoContacto tc){
-        
+    public void agregar(TipoContacto tc) throws AgendaException{
+        tc.Validar();
+        if(tiposContacto.contains(tc))  throw new AgendaException("El Tipo de contacto ya existe.");
         tiposContacto.add(tc);
+        Modelo.getInstancia().avisar(Modelo.Eventos.listaTiposContacto);
+        
     }
     
     public void agregar(TipoTelefono tt){
@@ -41,13 +44,6 @@ public class SistemaAgendas {
         return tiposTelefono;
     }
     
-    public void crearTipoContacto (String nombre) throws AgendaException{
-        String nombreUp = nombre.toUpperCase();
-        if(nombreUp.isEmpty()) throw new AgendaException("El nombre no puede estar vacío.");
-        if(obtenerTipoContacto(nombreUp)!=null)  throw new AgendaException("El Tipo de contacto ya existe.");
-        agregar(new TipoContacto(nombreUp));
-        Modelo.getInstancia().avisar(Modelo.Eventos.tiposContacto);
-        
-    }
+
     
 }
