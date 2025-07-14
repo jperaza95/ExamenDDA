@@ -14,6 +14,9 @@ public abstract class TipoTelefono {
     public TipoTelefono(String nombre) {
         this.nombre = nombre;
     }
+    
+    public TipoTelefono(){
+    }
 
     public String getNombre() {
         return nombre;
@@ -28,6 +31,15 @@ public abstract class TipoTelefono {
         return nombre;
     }
     
+    public boolean esNumerico(String numero) {
+        try {
+            Double.parseDouble(numero);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
     
+    public abstract void validar(Telefono tel) throws AgendaException;
     
 }

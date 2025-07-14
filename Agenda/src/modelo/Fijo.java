@@ -10,20 +10,20 @@ package modelo;
  */
 public class Fijo extends TipoTelefono{
 
-    public Fijo(TipoTelefono tipo, String numero) {
-        super(tipo, numero);
-    }
-
     public Fijo() {
+        super("Fijo");
     }
-    
     
 
     @Override
-    public void validar() throws AgendaException{
-       if(getNumero().length()!=8 || !esNumerico()) throw new AgendaException("Debe ingresar 8 dígitos.");
+    public void validar(Telefono tel) throws AgendaException{
+       String numero = tel.getNumero();
+
+       if(numero.length()!=8 || !esNumerico(numero)) throw new AgendaException("Debe ingresar 8 dígitos.");
                 
     }
+
+
     
     
     

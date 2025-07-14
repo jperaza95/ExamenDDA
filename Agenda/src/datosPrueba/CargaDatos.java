@@ -8,6 +8,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Administrador;
 import modelo.AgendaException;
+import modelo.Celular;
+import modelo.Fijo;
+import modelo.Internacional;
 import modelo.Modelo;
 import modelo.TipoContacto;
 import modelo.TipoTelefono;
@@ -35,9 +38,9 @@ public class CargaDatos {
             logica.agregar(new TipoContacto("LABORAL"));
             logica.agregar(new TipoContacto("FAMILIAR"));
 
-            logica.agregar(new TipoTelefono("Fijo"));
-            logica.agregar(new TipoTelefono("Celular"));
-            logica.agregar(new TipoTelefono("Internacional"));
+            logica.agregar(new Fijo());
+            logica.agregar(new Celular());
+            logica.agregar(new Internacional());
 
         } catch (AgendaException ex) {
             ex.printStackTrace();

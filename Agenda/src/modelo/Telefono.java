@@ -4,38 +4,42 @@
  */
 package modelo;
 
+import utilidades.Observable;
+
 /**
  *
  * @author peraza
  */
-public abstract class Telefono {
+public class Telefono extends Observable{
 
-    private TipoTelefono tipo;
+    private TipoTelefono tipoTelefono;
     private String numero;
 
-    public Telefono(TipoTelefono tipo, String numero) {
-        this.tipo = tipo;
+    public Telefono(TipoTelefono tipo, String numero){
+        this.tipoTelefono = tipo;
         this.numero = numero;
     }
 
     public Telefono() {
     }
+    
+    public enum Eventos{contactoModificado}
 
-    public void setTipo(TipoTelefono tipo) {
-        this.tipo = tipo;
+    public void setTipoTelefono(TipoTelefono tipoTelefono) {
+        this.tipoTelefono = tipoTelefono;
     }
     
     
 
-    public TipoTelefono getTipo() {
-        return tipo;
+    public TipoTelefono getTipoTelefono() {
+        return tipoTelefono;
     }
 
     public String getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(String numero){
         this.numero = numero;
     }
     
@@ -55,6 +59,26 @@ public abstract class Telefono {
         }
     }
 
-    public abstract void validar() throws AgendaException;
+    public void validar() throws AgendaException{
+        tipoTelefono.validar(this);
+    }
+
+    public void modificar(String num, TipoTelefono tipo) throws AgendaException {
+        String numeroBkp = this.numero;
+        TipoTelefono tipoTelBkp = this.tipoTelefono;
+        
+        setNumero(num);
+        setTipoTelefono(tipo);
+        try {
+            validar();
+            avisar(Eventos.contactoModificado);
+            
+        } catch (AgendaException e) {
+            setNumero(numeroBkp);
+            setTipoTelefono(tipoTelBkp);
+            throw e;
+            
+        }
+    }
 
 }

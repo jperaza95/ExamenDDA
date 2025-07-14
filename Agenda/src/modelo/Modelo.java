@@ -23,6 +23,8 @@ public class Modelo extends Observable{
     public static Modelo getInstancia() {
         return instancia;
     }
+
+
     
     public enum Eventos{listaLogueados, listaTiposContacto;}
 

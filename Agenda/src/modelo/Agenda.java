@@ -7,12 +7,13 @@ package modelo;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import utilidades.Observable;
+import utilidades.Observador;
 
 /**
  *
  * @author peraza
  */
-public class Agenda extends Observable{
+public class Agenda extends Observable implements Observador{
 
     private UsuarioAgenda dueño;
     private ArrayList<Contacto> contactos = new ArrayList();
@@ -20,6 +21,8 @@ public class Agenda extends Observable{
     public Agenda(UsuarioAgenda dueño) {
         this.dueño = dueño;
     }
+
+
     
     public enum Eventos{listaContactos};
 
@@ -32,6 +35,8 @@ public class Agenda extends Observable{
         avisar(Eventos.listaContactos);
         Modelo.getInstancia().avisar(Modelo.Eventos.listaLogueados);
 
+        //Como observador:
+        nuevo.getTelefono().agregarObservador(this);
     }
 
     
@@ -68,6 +73,10 @@ public class Agenda extends Observable{
         return dueño;
     }
 
+    @Override
+    public void actualizar(Observable origen, Object evento) {
+        if(evento.equals(Telefono.Eventos.contactoModificado)) avisar(Eventos.listaContactos);
+    }
 }
 
 

@@ -18,6 +18,7 @@ import modelo.TipoContacto;
 import modelo.TipoTelefono;
 import modelo.UsuarioAgenda;
 import controlador.VistaAgenda;
+import java.awt.Frame;
 
 
 
@@ -64,6 +65,7 @@ public class DialogoAgenda extends javax.swing.JDialog implements VistaAgenda{
         btnBuscar = new javax.swing.JButton();
         comboTipoTelefono = new javax.swing.JComboBox();
         lblTelefono = new javax.swing.JLabel();
+        bEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CREAR CONTACTO");
@@ -102,7 +104,7 @@ public class DialogoAgenda extends javax.swing.JDialog implements VistaAgenda{
 
         jScrollPane1.setViewportView(listContactos);
 
-        btnBuscar.setText("Busqueda");
+        btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -117,6 +119,13 @@ public class DialogoAgenda extends javax.swing.JDialog implements VistaAgenda{
 
         lblTelefono.setText("Tipo Telefono:");
 
+        bEditar.setText("Editar");
+        bEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bEditarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -126,38 +135,41 @@ public class DialogoAgenda extends javax.swing.JDialog implements VistaAgenda{
                 .addComponent(jLabel4)
                 .addGap(136, 136, 136))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(lblTelefono)
+                                .addGap(18, 18, 18)
+                                .addComponent(comboTipoTelefono, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addGap(50, 50, 50)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboTipoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCrearContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(109, 109, 109)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(27, 27, 27)
-                                        .addComponent(lblTelefono)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(comboTipoTelefono, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(25, 25, 25)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel2))
-                                        .addGap(50, 50, 50)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(tfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(tfNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(comboTipoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(46, 46, 46)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(bEditar)
+                        .addGap(38, 38, 38)
+                        .addComponent(btnBuscar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(65, 65, 65))
         );
         layout.setVerticalGroup(
@@ -187,7 +199,8 @@ public class DialogoAgenda extends javax.swing.JDialog implements VistaAgenda{
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscar)
-                    .addComponent(btnCrearContacto))
+                    .addComponent(btnCrearContacto)
+                    .addComponent(bEditar))
                 .addContainerGap(47, Short.MAX_VALUE))
         );
 
@@ -219,9 +232,14 @@ public class DialogoAgenda extends javax.swing.JDialog implements VistaAgenda{
         // TODO add your handling code here:
     }//GEN-LAST:event_comboTipoTelefonoActionPerformed
 
+    private void bEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditarActionPerformed
+        editar();
+    }//GEN-LAST:event_bEditarActionPerformed
+
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bEditar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCrearContacto;
     private javax.swing.JComboBox comboTipoContacto;
@@ -288,11 +306,10 @@ public class DialogoAgenda extends javax.swing.JDialog implements VistaAgenda{
     @Override
     
     public void mostrarEstado(UsuarioAgenda u) {
-
+        limpiarCampos();
         setearTitulo(u);
         listContactos.setListData(u.getAgenda().getContactos().toArray());
         dialogoB.setTitle("Busqueda en la agenda de "+u.getNombreCompleto());
-
         dialogoB.buscar();
     }    
     
@@ -313,6 +330,16 @@ public class DialogoAgenda extends javax.swing.JDialog implements VistaAgenda{
     @Override
     public void mostrarDetalles(Date fechaCreacion, String nombre, TipoContacto tipoContacto, Telefono telefono) {
        dialogoB.mostrarDetalles(fechaCreacion,nombre,tipoContacto,telefono);
+    }
+
+    private void editar() {
+        Contacto c = (Contacto)listContactos.getSelectedValue();
+        if(c!=null) new DialogoModificarContacto((Frame)getParent(), true, c).setVisible(true);
+    }
+
+    private void limpiarCampos() {
+        tfNombre.setText("");
+        tfTelefono.setText("");
     }
 
 

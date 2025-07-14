@@ -8,21 +8,20 @@ package modelo;
  *
  * @author peraza
  */
-public class Celular extends Telefono {
+public class Celular extends TipoTelefono {
 
-    public Celular(TipoTelefono tipo, String numero) {
-        super(tipo, numero);
-    }
 
-    public Celular() {
+    public Celular(){
+       super("Celular");
     }
-    
     
 
     @Override
-    public void validar() throws AgendaException{
-        if (getNumero().length()!=9 || !esNumerico()) throw new AgendaException("Debe ingresar 9 dígitos");
-        if (!getNumero().startsWith("09")) throw new AgendaException("El número debe comenzar con 09");
+    public void validar(Telefono tel) throws AgendaException{
+        String numero = tel.getNumero();
+
+        if (numero.length()!=9 || !esNumerico(numero)) throw new AgendaException("Debe ingresar 9 dígitos");
+        if (!numero.startsWith("09")) throw new AgendaException("El número debe comenzar con 09");
                 
     }
     

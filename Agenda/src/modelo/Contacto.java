@@ -6,6 +6,7 @@ package modelo;
 
 import java.util.Date;
 
+
 /**
  *
  * @author peraza
@@ -16,9 +17,9 @@ public class Contacto {
     private TipoContacto tipoContacto;
     private Date fechaCreacion;
 
-    public Contacto(String nombre, String numero, TipoContacto tipoContacto, TipoTelefono tipoTel) {
+    public Contacto(String nombre, String numero, TipoContacto tipoContacto, TipoTelefono tipoTel){
         this.nombre = nombre;
-        this.telefono = crearTelefono(numero,tipoTel);//new Telefono(numero,tipoTel);
+        this.telefono = new Telefono(tipoTel,numero); //crearTelefono(numero,tipoTel);
         this.tipoContacto = tipoContacto;
         this.fechaCreacion = new Date();
     }
@@ -60,11 +61,13 @@ public class Contacto {
         Contacto c = (Contacto)o;
         return getTelefono().equals(c.getTelefono());
     }
+    
 
-    private Telefono crearTelefono(String numero, TipoTelefono tipoTel) {
+    /*private Telefono crearTelefono(String numero, TipoTelefono tipoTel) {
         if (tipoTel.getNombre().equals("Fijo"))return new Fijo(tipoTel,numero);
         if (tipoTel.getNombre().equals("Celular"))return new Celular(tipoTel,numero);
         if (tipoTel.getNombre().equals("Internacional"))return new Internacional(tipoTel,numero);
+        
         return null;
         /*
         Fuera del alcance del curso
@@ -77,10 +80,12 @@ public class Contacto {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
-        }*/
+        }
         
         
-    }
+    }*/
+
+
 
     
 
