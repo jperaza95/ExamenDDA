@@ -8,7 +8,7 @@ package modelo;
  *
  * @author peraza
  */
-public class Fijo extends Telefono{
+public class Fijo extends TipoTelefono{
 
     public Fijo(TipoTelefono tipo, String numero) {
         super(tipo, numero);

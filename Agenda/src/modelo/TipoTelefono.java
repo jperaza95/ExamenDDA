@@ -8,7 +8,7 @@ package modelo;
  *
  * @author peraza
  */
-public class TipoTelefono {
+public abstract class TipoTelefono {
     private String nombre;
 
     public TipoTelefono(String nombre) {
