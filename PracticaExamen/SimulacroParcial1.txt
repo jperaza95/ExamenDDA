@@ -1,12 +1,17 @@
-public class ControladorAgenda{
+public class ControladorAgenda implements Observador{
 	private VistaAgenda vista;
 	private Agenda agenda;
+	private GrupoContactos grupo = new GrupoContactos();
+	
 	
 	public ControladorAgenda(VistaAgenda v, Agenda a){
 		this.vista = v;
 		this.agenda = a;
 		mostrarContactos();
 		mostrarGruposContacto();
+		vista.crearGrupoContactos();
+		
+		agenda.agregarObservador(this);
 	}
 	
 	public void mostrarContactos(){
@@ -14,9 +19,88 @@ public class ControladorAgenda{
 	}
 	
 	public void mostrarGruposContacto(){
-		vista.mostrarGruposContacto(a.getGruposContacto());
+		vista.mostrarGruposContacto(formatear(a.getGrupos()));
+	}
+
+	public ArrayList<String> formatear(ArrayList<GrupoContactos> grupos){
+		ArrayList<String> retorno = new ArrayList();
+		for(GrupoContactos g : grupos){
+			retorno.add(new String("Nombre: "+g.getNombre+" - cantidad de contactos: "+g.getCantidad());
+		}
 	}
 	
-	public void crearGrupoContactos()
 
+	public void confirmarAltaGrupo(String nombreGrupo){
+		try{
+			grupo.setNombre();
+			agenda.crearGrupoContactos(grupo);
+			vista.mostrarMensaje("Grupo creado correctamente");
+			grupo = new Grupo();
+		}catch(AgendaException e){
+			vista.mostrarError(e.getMessage());
+		}
+			
+	}
+	
+	public void agregarContactoAGrupo(Contacto c){
+		try{
+			grupo.agregar(c);
+			vista.mostrarContactosSeleccionados(grupo.getContactos());
+		}catch(AgendaException e){
+			vista.mostrarError(e.getMessage());
+		}
+	}
+	
+	@Override
+	public void actualizar(Observable origen, Object evento){
+		if(evento.equals(Agenda.Eventos.cambioGrupos) vista.mostrarGruposContacto();
+	}
+
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+public class Agenda() extends Observable{
+	private ArrayList<Contacto> contactos;
+	private ArrayList<GrupoContactos> grupos;
+	
+	public enum Eventos{cambioGrupos}
+	
+	public void crearGrupoContactos(GrupoContactos grupo) throws AgendaException{
+
+		grupo.validar();
+		if(grupos.contains(nuevoGrupo)) throw new AgendaException("Ya existe un grupo con ese nombre");
+		grupos.add(nuevoGrupo);
+		avisar(Eventos.cambioGrupos);
+	}
+	
+}
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+public class GrupoContactos{
+	private String nombre;
+	private ArrayList<Contacto> contactos;
+	
+	public GrupoContactos(String nom, ArrayList<Contacto>cont){
+		this.nombre = nom;
+		this.contactos = cont;
+		
+	}
+	
+	public void validar() throws AgendaException{
+		if(nombre==null || nombre.isEmpty()) throw new AgendaException("Debe ingresar un nombre para el grupo");
+		if(nombre.length()<5) throw new AgendaException("El nombre del grupo debe tener al menos 5 caracteres");
+		if(contactos.size()<2) throw new AgendaException("El grupo debe tener al menos 2 contactos");
+		
+	}
+	
+	@Override
+	
+	public boolean equals(Object obj){
+		GrupoContactos g = (GrupoContactos)obj;
+		return nombre.equals(g.getNombre());
+	}
 }
