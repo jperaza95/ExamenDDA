@@ -1,0 +1,22 @@
+public class ControladorAgenda{
+	private VistaAgenda vista;
+	private Agenda agenda;
+	
+	public ControladorAgenda(VistaAgenda v, Agenda a){
+		this.vista = v;
+		this.agenda = a;
+		mostrarContactos();
+		mostrarGruposContacto();
+	}
+	
+	public void mostrarContactos(){
+		vista.mostrarContactos(a.getContactos());
+	}
+	
+	public void mostrarGruposContacto(){
+		vista.mostrarGruposContacto(a.getGruposContacto());
+	}
+	
+	public void crearGrupoContactos()
+
+}
